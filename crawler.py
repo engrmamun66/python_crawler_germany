@@ -1,4 +1,5 @@
 # Supreme bot SBV1 with Selenium
+from audioop import add
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -96,6 +97,8 @@ def read_ads(input_keyword,driver):
             id_list.append(screen_id + "_g")
     # check for additional ad articles
     additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")
+    print(additional_children_by_css)
+    exit()
     for i in additional_children_by_css: # filling the result lists
         print("Google Textanzeige")
         try:
