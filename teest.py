@@ -1,8 +1,5 @@
-import sys,pdb
+from selenium import webdriver
 
+driver = webdriver.chrome(exectuable_path="C:\Users\mosma\Chromedriver.exe")
 
-print("One")
-a = 3
-# sys.exit()
-pdb.set_trace()
-print("Two")
+driver.get("http://medium.com")
