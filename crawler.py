@@ -57,76 +57,95 @@ def read_ads(input_keyword,driver):
         pass
 
     # finding the ad section on the website if nothing found continue with youtube ads
-    scrolling_carousel = None
-    trys_google = 1 # number of tries to receive a result with ads
-    while True:
-        if trys_google <= 0: break
-        trys_google -= 1
-        print(">>>>>>>>>>>>>>>>>>>>>> 1 <<<<<<<<<<<<<<<<<<<<<<<")
+    scrolling_carousel = driver.find_element_by_class_name("{1}".format("pla-exp-container","cu-container"))
+    
+    
+    time.sleep(5)
+    all_children_by_css = scrolling_carousel.find_elements_by_css_selector("[class='mnr-c pla-unit']")
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> --- '+ str(len(all_children_by_css)))
+    
+    _except = lambda param: '__not-found: res_'+ str(param)
+    
+    for i in all_children_by_css: # filling the result lists
+        print("Google Shopping Ad")        
         try:
-            time.sleep(2)
-            scrolling_carousel = driver.find_element_by_class_name("{1}".format("pla-exp-container","cu-container"))
-            print(">>>>>>>>>>>>>>>>>>>>>> 2 <<<<<<<<<<<<<<<<<<<<<<<")
-            print(type(scrolling_carousel))
-            print(str(scrolling_carousel))
-            break
-        except Exception as e:
-            driver.refresh()
-        
-        print((scrolling_carousel))
-        print('------- <> ---------')
-    if scrolling_carousel != None: # check if ad elements were found
-        print(">>>>>>>>>>>>>>>>>>>>>> 3 <<<<<<<<<<<<<<<<<<<<<<<")
-        driver.maximize_window()
-        driver.save_screenshot("C:\Webcrawler\Screens\{}_g.png".format(screen_id))
-        time.sleep(1.5)
-        driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
-        all_children_by_css = scrolling_carousel.find_elements_by_css_selector("[class='mnr-c pla-unit']")
-        for i in all_children_by_css: # filling the result lists
-            print("Google Shopping Ad")
+            res_1 = i.find_element_by_tag_name("a").get_attribute("href")
+        except:
+            res_1 =_except(1)
+        try:
+            res_2 = i.find_elements_by_css_selector("*")[1].get_attribute("aria-label")
+        except:
+            res_2 =_except(2)
+        try:
+            res_3 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
+        except:
+            res_3 =_except(3)
+        # try:
+        #     res_4 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].get_attribute("aria-label")[4:].text
+        # except:
+        #     res_4 =_except(4)
+                    
+        try:
+            res_4 = i.find_element_by_class_name("span.zPEcBd").text
+        except:
             try:
-                res_1 = i.find_elements_by_css_selector("*")[1].get_attribute("href")
-                res_2 = i.find_elements_by_css_selector("*")[1].get_attribute("aria-label")
-                # res_3 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
-                res_3 = i.find_elements_by_css_selector("[class='qptdjc']").text
-
-                #res_4 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].text
-                res_4 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].get_attribute("aria-label")[4:]
-                res_5 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[1].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].text
+                res_4 =res_2.split()[-1]
             except:
-                continue
-            # only add the results to the lists when all information was read properly            
-            rank += 1
-            rank_list.append(rank)
-            google_link_list.append(res_1)
-            google_title_list.append(res_2)
-            google_price_list.append(res_3)
-            google_seller_list.append(res_4)
-            google_ident_list.append("Google Shopping Ad")
-            brand_list.append(res_5)
-            id_list.append(screen_id + "_g")
-    # check for additional ad articles
-    additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")    
+                res_4 =_except(4)
+            
+            
+            
+            
+        try:
+            res_5 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[1].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].text
+        except:
+            res_5 =_except(5)
+        
+            
+        # only add the results to the lists when all information was read properly            
+        rank += 1
+        rank_list.append(rank)
+        google_link_list.append(str(res_1)) #https://www.atu.de/shop/Reifen-und-Felgen-w5369/Reifen_w10523/
+        google_title_list.append(str(res_2)) #Hankook Ventus V12 Evo2 K120 (XL) 225/45 R17 94Y Sommerreifen für 70,52 € von CHECK24
+        google_price_list.append(str(res_3)) #30,99 €
+        google_seller_list.append(str(res_4)) 
+        google_ident_list.append("Google Shopping Ad")
+        brand_list.append(str(res_5))
+        id_list.append(str(screen_id) + "_g")
+   
+    time.sleep(5)
+    additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")  
+      
     for i in additional_children_by_css: # filling the result lists
         print("Google Textanzeige")
         try:
-            #res_1 = i.find_element_by_class_name("Krnil").get_attribute("href")
             res_1 = i.find_element_by_class_name("sVXRqc").get_attribute("href")
+        except:
+            res_1 =_except(1)
+        try:
             res_2 = i.find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
-            # no price available in this type of ads
-            #res_4 = i.find_element_by_class_name("Krnil").get_attribute("data-pcu")
+        except:
+            res_2 =_except(2)    
+                    
+        # res_3: no price available in this type of ads
+            
+        try:
             res_4 = i.find_element_by_class_name("sVXRqc").get_attribute("data-pcu")
-        except Exception as e:
-            continue
+        except:
+            res_4 =_except(4)            
+            # no price available in this type of ads
+            
+            
+            
         # only add the results to the lists when all information was read properly
         rank += 1
-        rank_list.append(rank)
-        google_link_list.append(res_1)
-        google_title_list.append(res_2)
+        rank_list.append(str(rank))
+        google_link_list.append(str(res_1))
+        google_title_list.append(str(res_2))
         google_price_list.append("")
-        google_seller_list.append(res_4)
+        google_seller_list.append(str(res_4))
         google_ident_list.append("Google Textanzeige")
-        id_list.append(screen_id + "_g")
+        id_list.append(str(screen_id) + "_g")
                 
     
     
