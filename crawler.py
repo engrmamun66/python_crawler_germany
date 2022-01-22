@@ -49,7 +49,7 @@ def read_ads(input_keyword,driver):
     #searchbar = driver.find_element_by_css_selector("[title='Suche']")
     #searchbar.send_keys(eingabe_google)
 
-
+    
     
     try:
         searchbar.send_keys(Keys.RETURN)
@@ -58,17 +58,25 @@ def read_ads(input_keyword,driver):
 
     # finding the ad section on the website if nothing found continue with youtube ads
     scrolling_carousel = None
-    trys_google = 10 # number of tries to receive a result with ads
+    trys_google = 1 # number of tries to receive a result with ads
     while True:
         if trys_google <= 0: break
         trys_google -= 1
+        print(">>>>>>>>>>>>>>>>>>>>>> 1 <<<<<<<<<<<<<<<<<<<<<<<")
         try:
             time.sleep(2)
-            scrolling_carousel = driver.find_element_by_class_name("pla-exp-container")
+            scrolling_carousel = driver.find_element_by_class_name("{1}".format("pla-exp-container","cu-container"))
+            print(">>>>>>>>>>>>>>>>>>>>>> 2 <<<<<<<<<<<<<<<<<<<<<<<")
+            print(type(scrolling_carousel))
+            print(str(scrolling_carousel))
             break
         except Exception as e:
             driver.refresh()
+        
+        print((scrolling_carousel))
+        print('------- <> ---------')
     if scrolling_carousel != None: # check if ad elements were found
+        print(">>>>>>>>>>>>>>>>>>>>>> 3 <<<<<<<<<<<<<<<<<<<<<<<")
         driver.maximize_window()
         driver.save_screenshot("C:\Webcrawler\Screens\{}_g.png".format(screen_id))
         time.sleep(1.5)
@@ -79,13 +87,15 @@ def read_ads(input_keyword,driver):
             try:
                 res_1 = i.find_elements_by_css_selector("*")[1].get_attribute("href")
                 res_2 = i.find_elements_by_css_selector("*")[1].get_attribute("aria-label")
-                res_3 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
+                # res_3 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
+                res_3 = i.find_elements_by_css_selector("[class='qptdjc']").text
+
                 #res_4 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].text
                 res_4 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].get_attribute("aria-label")[4:]
                 res_5 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[1].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].text
-            except Exception as e:
+            except:
                 continue
-            # only add the results to the lists when all information was read properly
+            # only add the results to the lists when all information was read properly            
             rank += 1
             rank_list.append(rank)
             google_link_list.append(res_1)
@@ -96,9 +106,7 @@ def read_ads(input_keyword,driver):
             brand_list.append(res_5)
             id_list.append(screen_id + "_g")
     # check for additional ad articles
-    additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")
-    print(additional_children_by_css)
-    exit()
+    additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")    
     for i in additional_children_by_css: # filling the result lists
         print("Google Textanzeige")
         try:
