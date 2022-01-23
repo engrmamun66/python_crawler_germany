@@ -79,23 +79,14 @@ def read_ads(input_keyword,driver):
         try:
             res_3 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
         except:
-            res_3 =_except(3)
-        # try:
-        #     res_4 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].get_attribute("aria-label")[4:].text
-        # except:
-        #     res_4 =_except(4)
-                    
+            res_3 =_except(3)           
         try:
             res_4 = i.find_element_by_class_name("span.zPEcBd").text
         except:
             try:
                 res_4 =res_2.split()[-1]
             except:
-                res_4 =_except(4)
-            
-            
-            
-            
+                res_4 =_except(4)                
         try:
             res_5 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[1].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].text
         except:
