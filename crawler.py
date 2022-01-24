@@ -49,95 +49,99 @@ def read_ads(input_keyword,driver):
     #searchbar = driver.find_element_by_css_selector("[title='Suche']")
     #searchbar.send_keys(eingabe_google)
 
+    if 1:
     
-    
-    try:
-        searchbar.send_keys(Keys.RETURN)
-    except Exception as e:
-        pass
+        try:
+            searchbar.send_keys(Keys.RETURN)
+        except Exception as e:
+            pass
 
-    # finding the ad section on the website if nothing found continue with youtube ads
-    scrolling_carousel = driver.find_element_by_class_name("{1}".format("pla-exp-container","cu-container"))
-    
-    
-    time.sleep(5)
-    all_children_by_css = scrolling_carousel.find_elements_by_css_selector("[class='mnr-c pla-unit']")
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> --- '+ str(len(all_children_by_css)))
-    
-    _except = lambda param: '__not-found: res_'+ str(param)
-    
-    for i in all_children_by_css: # filling the result lists
-        print("Google Shopping Ad")        
-        try:
-            res_1 = i.find_element_by_tag_name("a").get_attribute("href")
-        except:
-            res_1 =_except(1)
-        try:
-            res_2 = i.find_elements_by_css_selector("*")[1].get_attribute("aria-label")
-        except:
-            res_2 =_except(2)
-        try:
-            res_3 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
-        except:
-            res_3 =_except(3)           
-        try:
-            res_4 = i.find_element_by_class_name("span.zPEcBd").text
-        except:
-            try:
-                res_4 =res_2.split()[-1]
-            except:
-                res_4 =_except(4)                
-        try:
-            res_5 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[1].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].text
-        except:
-            res_5 =_except(5)
+        # finding the ad section on the website if nothing found continue with youtube ads
+        scrolling_carousel = driver.find_element_by_class_name("{1}".format("pla-exp-container","cu-container"))
         
+        
+        time.sleep(5)
+        all_children_by_css = scrolling_carousel.find_elements_by_css_selector("[class='mnr-c pla-unit']")
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> --- '+ str(len(all_children_by_css)))
+        
+        _except = lambda param: '__not-found: res_'+ str(param)
+        
+        for i in all_children_by_css: # filling the result lists
+            print("Google Shopping Ad")        
+            try:
+                res_1 = i.find_element_by_tag_name("a").get_attribute("href")
+            except:
+                res_1 =_except(1)
+            try:
+                res_2 = i.find_elements_by_css_selector("*")[1].get_attribute("aria-label")
+            except:
+                res_2 =_except(2)
+            try:
+                res_3 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
+            except:
+                res_3 =_except(3)           
+            try:
+                res_4 = i.find_element_by_class_name("span.zPEcBd").text
+            except:
+                try:
+                    res_4 =res_2.split()[-1]
+                except:
+                    res_4 =_except(4)                
+            try:
+                res_5 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[1].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].text
+            except:
+                res_5 =_except(5)
             
-        # only add the results to the lists when all information was read properly            
-        rank += 1
-        rank_list.append(rank)
-        google_link_list.append(str(res_1)) #https://www.atu.de/shop/Reifen-und-Felgen-w5369/Reifen_w10523/
-        google_title_list.append(str(res_2)) #Hankook Ventus V12 Evo2 K120 (XL) 225/45 R17 94Y Sommerreifen für 70,52 € von CHECK24
-        google_price_list.append(str(res_3)) #30,99 €
-        google_seller_list.append(str(res_4)) 
-        google_ident_list.append("Google Shopping Ad")
-        brand_list.append(str(res_5))
-        id_list.append(str(screen_id) + "_g")
-   
-    time.sleep(5)
-    additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")  
-      
-    for i in additional_children_by_css: # filling the result lists
-        print("Google Textanzeige")
-        try:
-            res_1 = i.find_element_by_class_name("sVXRqc").get_attribute("href")
-        except:
-            res_1 =_except(1)
-        try:
-            res_2 = i.find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
-        except:
-            res_2 =_except(2)    
-                    
-        # res_3: no price available in this type of ads
-            
-        try:
-            res_4 = i.find_element_by_class_name("sVXRqc").get_attribute("data-pcu")
-        except:
-            res_4 =_except(4)            
-            # no price available in this type of ads
-            
-            
-            
-        # only add the results to the lists when all information was read properly
-        rank += 1
-        rank_list.append(str(rank))
-        google_link_list.append(str(res_1))
-        google_title_list.append(str(res_2))
-        google_price_list.append("")
-        google_seller_list.append(str(res_4))
-        google_ident_list.append("Google Textanzeige")
-        id_list.append(str(screen_id) + "_g")
                 
+            # only add the results to the lists when all information was read properly            
+            rank += 1
+            rank_list.append(rank)
+            google_link_list.append(str(res_1)) #https://www.atu.de/shop/Reifen-und-Felgen-w5369/Reifen_w10523/
+            google_title_list.append(str(res_2)) #Hankook Ventus V12 Evo2 K120 (XL) 225/45 R17 94Y Sommerreifen für 70,52 € von CHECK24
+            google_price_list.append(str(res_3)) #30,99 €
+            google_seller_list.append(str(res_4)) 
+            google_ident_list.append("Google Shopping Ad")
+            brand_list.append(str(res_5))
+            id_list.append(str(screen_id) + "_g")
+    
+        time.sleep(5)
+        additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")  
+        
+        for i in additional_children_by_css: # filling the result lists
+            print("Google Textanzeige")
+            try:
+                res_1 = i.find_element_by_class_name("sVXRqc").get_attribute("href")
+            except:
+                res_1 =_except(1)
+            try:
+                res_2 = i.find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
+            except:
+                res_2 =_except(2)    
+                        
+            # res_3: no price available in this type of ads
+                
+            try:
+                res_4 = i.find_element_by_class_name("sVXRqc").get_attribute("data-pcu")
+            except:
+                res_4 =_except(4)            
+                # no price available in this type of ads
+                
+                
+                
+            # only add the results to the lists when all information was read properly
+            rank += 1
+            rank_list.append(str(rank))
+            google_link_list.append(str(res_1))
+            google_title_list.append(str(res_2))
+            google_price_list.append("")
+            google_seller_list.append(str(res_4))
+            google_ident_list.append("Google Textanzeige")
+            id_list.append(str(screen_id) + "_g")
+                    
+        
+    
+    
+    
     
     
     # CRAWL YOUTUBE -------------------------------------------------------------------------------------------------------------------------
@@ -163,6 +167,7 @@ def read_ads(input_keyword,driver):
     except Exception as e:
         pass
 
+    # Youtube Shopping Ad
     # finding the ad section on the website if nothing found return empty lists
     ad_elements = None
     trys_youtube = 10 # number of tries to receive a result with ads
@@ -171,69 +176,91 @@ def read_ads(input_keyword,driver):
         trys_youtube -= 1
         try:
             time.sleep(1)
-            ad_elements_list = driver.find_elements_by_id("items")
+            ad_elements_list = driver.find_element_by_id("items")
+            print(f"---->>>>>>>>>>>>>>> Reached Here-0")
             for i in ad_elements_list:
                 if i.get_attribute('class') == "style-scope yt-horizontal-list-renderer": 
                     ad_elements = i
                     break
-        except Exception as e:
+        except Exception as err: 
+            print(f"---->>>>>>>>>>>>>>> Reached Here-00")           
             pass
-    if ad_elements != None: # check if ad elements were found
-        driver.maximize_window()
-        time.sleep(1.5)
-        driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
-        for i in ad_elements.find_elements_by_xpath("./*"):
-            try:
-                res_1 = i.find_element_by_css_selector("[id='title-link']").get_attribute("href")
-                res_2 = i.find_element_by_css_selector("[id='title-text']").get_attribute("title")
-                res_3 = i.find_element_by_css_selector("[id='secondary-text']").get_attribute("title")
-                res_4 = i.find_element_by_css_selector("[id='body-text']").get_attribute("title")
-            except Exception as e:
-                continue
-            # only add the results to the lists when all information was read properly
-            rank += 1
-            rank_list.append(rank)
-            google_link_list.append(res_1)
-            google_title_list.append(res_2)
-            google_price_list.append(res_3)
-            google_seller_list.append(res_4)
-            google_ident_list.append("Youtube Shopping Ad")
-            id_list.append(screen_id + "_yt")
-            print("Yotube ad")
-                        
-            
+    if 1:   
+        print(f"---->>>>>>>>>>>>>>> Reached Here-1")
+        if ad_elements != None: # check if ad elements were found
+            driver.maximize_window()
+            time.sleep(1.5)
+            driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
+            print(f"---->>>>>>>>>>>>>>> Reached Here-2")
+            for i in ad_elements.find_elements_by_xpath("./*"):
+                try:
+                    res_1 = i.find_element_by_css_selector("[id='title-link']").get_attribute("href")
+                    res_2 = i.find_element_by_css_selector("[id='title-text']").get_attribute("title")
+                    res_3 = i.find_element_by_css_selector("[id='secondary-text']").get_attribute("title")
+                    res_4 = i.find_element_by_css_selector("[id='body-text']").get_attribute("title")
+                except Exception as e:
+                    continue
+                # only add the results to the lists when all information was read properly
+                rank += 1
+                rank_list.append(rank)
+                google_link_list.append(res_1)
+                google_title_list.append(res_2)
+                google_price_list.append(res_3)
+                google_seller_list.append(res_4)
+                google_ident_list.append("Youtube Shopping Ad")
+                id_list.append(screen_id + "_yt")
+                print("Yotube ad")
+                            
+        
+        
+   
+                
+    # check for additional ads    
+    if 1:
+        additional_ad_elements = driver.find_elements_by_id("contents")
+        if ad_elements != None or additional_ad_elements != None:
+            driver.save_screenshot("C:\Webcrawler\Screens\{}_yt.png".format(screen_id))
+        if additional_ad_elements != None: # check if additional ad elements were found
+            for i in additional_ad_elements:
+                if i.get_attribute('class') == "style-scope ytd-section-list-renderer": 
+                    additional_ad_elements = i
+                    break
+            for i in additional_ad_elements.find_elements_by_xpath("./*"):
+                try:
+                    # res_1 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("right-container").find_element_by_id("call-to-action").find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].get_attribute("href")
+                    res_1 = i.find_element_by_id("website-text").text 
+                    res_1 = i.find_element_by_link_text('http').text
+                except : 
+                    try:
+                        res_1 = i.find_element_by_link_text('http').text
+                        res_1 = i.find_element_by_tag_name('a').get_attribute("href")
+                    except:
+                        try:
+                            res_1 = i.find_element_by_tag_name('a').get_attribute("href")
+                        except:
+                            res_1 = _except(1)
+                try:                
+                    # res_2 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("main-container").find_element_by_id("title").get_attribute("title")
+                    res_2 = i.find_element_by_id("title").text
+                except : res_2 = _except(2)
+                    # no price available in this type of ads
+                try:                
+                    res_4 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("main-container").find_element_by_id("format-container").find_element_by_id("display-url").get_attribute("title")
+                except : res_4 = _except(4)
+                # only add the results to the lists when all information was read properly
+                rank += 1
+                rank_list.append(rank)
+                google_link_list.append(res_1)
+                google_title_list.append(res_2)
+                google_price_list.append("")
+                google_seller_list.append(res_4)
+                google_ident_list.append("Youtube Textanzeige")
+                id_list.append(screen_id + "_yt")
+                print("Youtbe Text")
+                            
+        
 
-    # check for additional ads
-    additional_ad_elements = driver.find_elements_by_id("contents")
-    if ad_elements != None or additional_ad_elements != None:
-        driver.save_screenshot("C:\Webcrawler\Screens\{}_yt.png".format(screen_id))
-    if additional_ad_elements != None: # check if additional ad elements were found
-        for i in additional_ad_elements:
-            if i.get_attribute('class') == "style-scope ytd-section-list-renderer": 
-                additional_ad_elements = i
-                break
-        for i in additional_ad_elements.find_elements_by_xpath("./*"):
-            try:
-                res_1 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("right-container").find_element_by_id("call-to-action").find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].get_attribute("href")
-                res_2 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("main-container").find_element_by_id("title").get_attribute("title")
-                # no price available in this type of ads
-                res_4 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("main-container").find_element_by_id("format-container").find_element_by_id("display-url").get_attribute("title")
-            except Exception as e:
-                continue
-            # only add the results to the lists when all information was read properly
-            rank += 1
-            rank_list.append(rank)
-            google_link_list.append(res_1)
-            google_title_list.append(res_2)
-            google_price_list.append("")
-            google_seller_list.append(res_4)
-            google_ident_list.append("Youtube Textanzeige")
-            id_list.append(screen_id + "_yt")
-            print("Youtbe Text")
-                        
-    
-
-    
+        
 
     # close web driver
     driver.close()
