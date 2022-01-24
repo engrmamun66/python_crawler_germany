@@ -49,8 +49,8 @@ class GUI():
                     s=Service(PATH)
                     options = webdriver.ChromeOptions()
                     options.add_experimental_option('excludeSwitches', ['enable-automation'])
-                    # driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
-                    driver = webdriver.Chrome(service=s)
+                    driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
+                    # driver = webdriver.Chrome(service=s)
                     # driver = webdriver.Chrome(service=s, chrome_options=options)
                     try:
                         results[keyword] = crawler.read_ads(keyword,driver)
@@ -70,8 +70,8 @@ class GUI():
                     s=Service(PATH)
                     options = webdriver.ChromeOptions()
                     options.add_experimental_option('excludeSwitches', ['enable-automation'])
-                    # driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
-                    driver = webdriver.Chrome(service=s)
+                    driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
+                    # driver = webdriver.Chrome(service=s)
                     try:
                         results[keyword] = self.crawl(keyword,driver)
                         if len(results[keyword][0]) > 0:
