@@ -1,13 +1,13 @@
 from tkinter import *
 from datetime import datetime
-import crawler
+import crawler_arnav_dont_touch
 import xlsxwriter
 from selenium import webdriver
 import os
 
 
 def crawl(keyword,driver):
-    return crawler.read_ads(keyword,driver)
+    return crawler_arnav_dont_touch.read_ads(keyword,driver)
 
 def safe(results):
     time_now = str(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
@@ -102,7 +102,7 @@ for keyword in keywords.readlines():
         options.add_experimental_option('excludeSwitches', ['enable-automation'])
         driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
         try:
-            results[keyword] = crawler.read_ads(keyword,driver)
+            results[keyword] = crawler_arnav_dont_touch.read_ads(keyword,driver)
             '''if len(results[keyword][0]) > 0:         debug
                 break'''
         except Exception as e:
