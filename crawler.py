@@ -86,8 +86,8 @@ def read_ads(input_keyword,driver):
             driver.maximize_window()
             time.sleep(1.5)
             driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
-            print(f"---->>>>>>>>>>>>>>> Reached Here-2")
-            for i in ad_elements.find_elements_by_xpath("./*"):
+            # for i in ad_elements.find_elements_by_xpath("./*"):
+            for i in ad_elements:
                 print("Youtube Shopping Ad")
                 try:
                     res_1 = i.find_element_by_css_selector("[id='title-link']").get_attribute("href")
@@ -106,57 +106,7 @@ def read_ads(input_keyword,driver):
                 google_ident_list.append("Youtube Shopping Ad")
                 id_list.append(screen_id + "_yt")
                 print("Yotube ad")
-                            
-        
-        
-   
-                
-    # check for additional ads    
-    if 1:
-        additional_ad_elements = driver.find_elements_by_id("contents")
-        if ad_elements != None or additional_ad_elements != None:
-            driver.save_screenshot("C:\Webcrawler\Screens\{}_yt.png".format(screen_id))
-        if additional_ad_elements != None: # check if additional ad elements were found
-            for i in additional_ad_elements:
-                if i.get_attribute('class') == "style-scope ytd-section-list-renderer": 
-                    additional_ad_elements = i
-                    break
-            for i in additional_ad_elements.find_elements_by_xpath("./*"):
-                try:
-                    # res_1 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("right-container").find_element_by_id("call-to-action").find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].get_attribute("href")
-                    res_1 = i.find_element_by_id("website-text").text 
-                    res_1 = i.find_element_by_link_text('http').text
-                except : 
-                    try:
-                        res_1 = i.find_element_by_link_text('http').text
-                        res_1 = i.find_element_by_tag_name('a').get_attribute("href")
-                    except:
-                        try:
-                            res_1 = i.find_element_by_tag_name('a').get_attribute("href")
-                        except:
-                            res_1 = _except(1)
-                try:                
-                    # res_2 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("main-container").find_element_by_id("title").get_attribute("title")
-                    res_2 = i.find_element_by_id("title").text
-                except : res_2 = _except(2)
-                    # no price available in this type of ads
-                try:                
-                    res_4 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("main-container").find_element_by_id("format-container").find_element_by_id("display-url").get_attribute("title")
-                except : res_4 = _except(4)
-                # only add the results to the lists when all information was read properly
-                rank += 1
-                rank_list.append(rank)
-                google_link_list.append(res_1)
-                google_title_list.append(res_2)
-                google_price_list.append("")
-                google_seller_list.append(res_4)
-                google_ident_list.append("Youtube Textanzeige")
-                id_list.append(screen_id + "_yt")
-                print("Youtbe Text")
-                            
-        
 
-        
 
     # close web driver
     driver.close()
