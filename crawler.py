@@ -39,35 +39,27 @@ def read_ads(input_keyword,driver):
     # CRAWL GOOGLE -------------------------------------------------------------------------------------------------------------------------
     # navigate to Google website and accept cookies
     driver.get("https://www.google.de/search?q={}".format(input_keyword))
-    try: 
+    try:
         WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,("//*[text()='Ich stimme zu']")))).click()
     except:
         WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//*[@id='zV9nZe']"))).click()
-    driver.switch_to.default_content()    
+    driver.switch_to.default_content()
     # set input and start google search
     #eingabe_google = input_keyword
     #searchbar = driver.find_element_by_css_selector("[title='Suche']")
     #searchbar.send_keys(eingabe_google)
-
     if 1:
-    
         try:
             searchbar.send_keys(Keys.RETURN)
         except Exception as e:
             pass
-
         # finding the ad section on the website if nothing found continue with youtube ads
         scrolling_carousel = driver.find_element_by_class_name("{1}".format("pla-exp-container","cu-container"))
-        
-        
         time.sleep(5)
         all_children_by_css = scrolling_carousel.find_elements_by_css_selector("[class='mnr-c pla-unit']")
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> --- '+ str(len(all_children_by_css)))
-        
+        print('>>>>>>>>>>> --- Google Shopping Ad count: '+ str(len(all_children_by_css)))
         _except = lambda param: '__not-found: res_'+ str(param)
-        
         for i in all_children_by_css: # filling the result lists
-            print("Google Shopping Ad")        
             try:
                 res_1 = i.find_element_by_tag_name("a").get_attribute("href")
             except:
@@ -79,21 +71,20 @@ def read_ads(input_keyword,driver):
             try:
                 res_3 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
             except:
-                res_3 =_except(3)           
+                res_3 =_except(3)
             try:
                 res_4 = i.find_element_by_class_name("span.zPEcBd").text
             except:
                 try:
                     res_4 =res_2.split()[-1]
                 except:
-                    res_4 =_except(4)                
+                    res_4 =_except(4)
             try:
                 res_5 = i.find_element_by_css_selector("[class='pla-unit-container']").find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[1].find_elements_by_xpath("./*")[2].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].text
             except:
                 res_5 =_except(5)
-            
-                
-            # only add the results to the lists when all information was read properly            
+
+            # only add the results to the lists when all information was read properly
             rank += 1
             rank_list.append(rank)
             google_link_list.append(str(res_1)) #https://www.atu.de/shop/Reifen-und-Felgen-w5369/Reifen_w10523/
@@ -103,12 +94,11 @@ def read_ads(input_keyword,driver):
             google_ident_list.append("Google Shopping Ad")
             brand_list.append(str(res_5))
             id_list.append(str(screen_id) + "_g")
-    
+
         time.sleep(5)
-        additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")  
-        
-        for i in additional_children_by_css: # filling the result lists
-            print("Google Textanzeige")
+        additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")
+        print('>>>>>>>>>>> --- Google Textanzeige Ad count: '+ str(len(all_children_by_css)))
+        for i in additional_children_by_css: 
             try:
                 res_1 = i.find_element_by_class_name("sVXRqc").get_attribute("href")
             except:
@@ -116,18 +106,13 @@ def read_ads(input_keyword,driver):
             try:
                 res_2 = i.find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
             except:
-                res_2 =_except(2)    
-                        
+                res_2 =_except(2)
             # res_3: no price available in this type of ads
-                
             try:
                 res_4 = i.find_element_by_class_name("sVXRqc").get_attribute("data-pcu")
             except:
-                res_4 =_except(4)            
+                res_4 =_except(4)
                 # no price available in this type of ads
-                
-                
-                
             # only add the results to the lists when all information was read properly
             rank += 1
             rank_list.append(str(rank))
@@ -137,9 +122,7 @@ def read_ads(input_keyword,driver):
             google_seller_list.append(str(res_4))
             google_ident_list.append("Google Textanzeige")
             id_list.append(str(screen_id) + "_g")
-                    
-        
-    
+
     
     
     
@@ -177,21 +160,18 @@ def read_ads(input_keyword,driver):
         try:
             time.sleep(1)
             ad_elements_list = driver.find_element_by_id("items")
-            print(f"---->>>>>>>>>>>>>>> Reached Here-0")
             for i in ad_elements_list:
-                if i.get_attribute('class') == "style-scope yt-horizontal-list-renderer": 
+                if i.get_attribute('class') == "style-scope yt-horizontal-list-renderer":
                     ad_elements = i
                     break
-        except Exception as err: 
-            print(f"---->>>>>>>>>>>>>>> Reached Here-00")           
+        except Exception as err:
             pass
-    if 1:   
-        print(f"---->>>>>>>>>>>>>>> Reached Here-1")
+    if 1:
         if ad_elements != None: # check if ad elements were found
             driver.maximize_window()
             time.sleep(1.5)
-            driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
-            print(f"---->>>>>>>>>>>>>>> Reached Here-2")
+            driver.set_window_size(700, 1080)
+            print('>>>>>>>>>>> --- Youtube Shopping Ad count: '+ str(len(ad_elements)))
             for i in ad_elements.find_elements_by_xpath("./*"):
                 try:
                     res_1 = i.find_element_by_css_selector("[id='title-link']").get_attribute("href")
@@ -209,13 +189,9 @@ def read_ads(input_keyword,driver):
                 google_seller_list.append(res_4)
                 google_ident_list.append("Youtube Shopping Ad")
                 id_list.append(screen_id + "_yt")
-                print("Yotube ad")
-                            
-        
-        
-   
-                
-    # check for additional ads    
+
+
+    # check for additional ads
     if 1:
         additional_ad_elements = driver.find_elements_by_id("contents")
         if ad_elements != None or additional_ad_elements != None:
@@ -225,6 +201,7 @@ def read_ads(input_keyword,driver):
                 if i.get_attribute('class') == "style-scope ytd-section-list-renderer": 
                     additional_ad_elements = i
                     break
+            print('>>>>>>>>>>> --- Youtube Textanzeige Ad count: '+ str(len(additional_ad_elements)))
             for i in additional_ad_elements.find_elements_by_xpath("./*"):
                 try:
                     # res_1 = i.find_element_by_id("contents").find_elements_by_xpath("./*")[0].find_element_by_id("root-container").find_element_by_id("right-container").find_element_by_id("call-to-action").find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].get_attribute("href")
