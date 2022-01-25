@@ -61,11 +61,12 @@ def read_ads(input_keyword,driver):
 
         time.sleep(5)
         all_children_by_css = scrolling_carousel.find_elements_by_css_selector("[class='mnr-c pla-unit']")
-        print('>>>>> --- Google Shopping Ad count: '+ str(len(all_children_by_css)))
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> --- '+ str(len(all_children_by_css)))
 
         _except = lambda param: '__not-found: res_'+ str(param)
 
         for i in all_children_by_css: # filling the result lists
+            print("Google Shopping Ad")
             try:
                 res_1 = i.find_element_by_tag_name("a").get_attribute("href")
             except:
@@ -102,7 +103,6 @@ def read_ads(input_keyword,driver):
             id_list.append(str(screen_id) + "_g")
         time.sleep(5)
         additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")
-        print('>>>>> --- Google Textanzeige Ad count: '+ str(len(additional_children_by_css)))
         for i in additional_children_by_css: # filling the result lists
             print("Google Textanzeige")
             try:
@@ -113,12 +113,14 @@ def read_ads(input_keyword,driver):
                 res_2 = i.find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[0].find_elements_by_xpath("./*")[1].text
             except:
                 res_2 =_except(2)
+                        
             # res_3: no price available in this type of ads
 
             try:
                 res_4 = i.find_element_by_class_name("sVXRqc").get_attribute("data-pcu")
             except:
                 res_4 =_except(4)
+                # no price available in this type of ads
             # only add the results to the lists when all information was read properly
             rank += 1
             rank_list.append(str(rank))
@@ -161,7 +163,6 @@ def read_ads(input_keyword,driver):
                 if i.get_attribute('class') == "style-scope ytd-section-list-renderer": 
                     additional_ad_elements = i
                     break
-            print('>>>>> --- Youtube Textanzeige Ad count: '+ str(len(additional_ad_elements)))
             for i in additional_ad_elements.find_elements_by_xpath("./*"):
                 try:
                     res_1 = i.find_element_by_id("website-text").text 
