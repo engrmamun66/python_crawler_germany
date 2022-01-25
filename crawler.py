@@ -152,15 +152,15 @@ def read_ads(input_keyword,driver):
         pass
 
     # check for Youtube Textanzeige
-    if 1:
-        driver.maximize_window()
-        ad_elements = driver.find_elements_by_id("items")
-        if ad_elements != None:
-            for i in ad_elements:
-                if i.get_attribute('class') == "style-scope yt-horizontal-list-renderer": 
-                    ad_elements = i
-                    break
-            print('>>>>> --- Youtube Shopping Ad count: '+ str(len(ad_elements)))
+    # if 1:
+    #     driver.maximize_window()
+    #     ad_elements = driver.find_elements_by_id("items")
+    #     if ad_elements != None:
+    #         for i in ad_elements:
+    #             if i.get_attribute('class') == "style-scope yt-horizontal-list-renderer": 
+    #                 ad_elements = i
+    #                 break
+    #         print('>>>>> --- Youtube Shopping Ad count: '+ str(len(ad_elements)))
 
 
     # check for Youtube Textanzeige
