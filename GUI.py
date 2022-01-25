@@ -10,7 +10,7 @@ import csv
 import pdb
 
 from selenium.webdriver.chrome import service
-from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.chrome.service import Service
 
 
 
@@ -46,11 +46,11 @@ class GUI():
             results = {}
             for keyword in keywords.readlines():
                     PATH = r"chromedriver_win32/chromedriver.exe" #  path to chrome driver
-                    s=Service(PATH)
+                    # s=Service(PATH)
                     options = webdriver.ChromeOptions()
                     options.add_experimental_option('excludeSwitches', ['enable-automation'])
-                    # driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
-                    driver = webdriver.Chrome(service=s)
+                    driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
+                    # driver = webdriver.Chrome(service=s)
                     # driver = webdriver.Chrome(service=s, chrome_options=options)
                     try:
                         results[keyword] = crawler.read_ads(keyword,driver)
@@ -67,7 +67,7 @@ class GUI():
             for keyword in keywords:
                 for i in range(1):
                     PATH = r"chromedriver_win32/chromedriver.exe" #  path to chrome driver
-                    s=Service(PATH)
+                    # s=Service(PATH)
                     options = webdriver.ChromeOptions()
                     options.add_experimental_option('excludeSwitches', ['enable-automation'])
                     driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
