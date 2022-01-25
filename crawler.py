@@ -150,7 +150,11 @@ def read_ads(input_keyword,driver):
         searchbar.send_keys(Keys.RETURN)
     except Exception as e:
         pass
-
+    
+    # if 1:
+    #     ad_elements = driver.find_elements_by_css_selector("[class='style-scope yt-horizontal-list-renderer']")
+    #     if ad_elements != None:
+    driver.maximize_window()
 
     # check for additional ads
     if 1:
@@ -160,7 +164,7 @@ def read_ads(input_keyword,driver):
                 if i.get_attribute('class') == "style-scope ytd-section-list-renderer": 
                     additional_ad_elements = i
                     break
-            # print('>>>>> --- Youtube Textanzeige Ad count: '+ str(len(additional_ad_elements)))
+
             for i in additional_ad_elements.find_elements_by_xpath("./*"):
                 print('>>>>> --- Youtube Textanzeige Ad')
                 try:
