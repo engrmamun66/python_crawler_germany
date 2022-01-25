@@ -160,7 +160,7 @@ def read_ads(input_keyword,driver):
                 if i.get_attribute('class') == "style-scope ytd-section-list-renderer": 
                     additional_ad_elements = i
                     break
-            print('>>>>> --- Youtube Textanzeige Ad count: '+ str(len(additional_children_by_css)))
+            print('>>>>> --- Youtube Textanzeige Ad count: '+ str(len(additional_ad_elements)))
             for i in additional_ad_elements.find_elements_by_xpath("./*"):
                 try:
                     res_1 = i.find_element_by_id("website-text").text 
