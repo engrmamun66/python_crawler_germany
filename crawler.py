@@ -35,7 +35,8 @@ def read_ads(input_keyword,driver):
     id_list = []
     rank = 0
     #options.add_argument('headless')
-    driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
+    # driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
+    driver.maximize_window()
     # CRAWL GOOGLE -------------------------------------------------------------------------------------------------------------------------
     # navigate to Google website and accept cookies
     driver.get("https://www.google.de/search?q={}".format(input_keyword))
@@ -154,7 +155,7 @@ def read_ads(input_keyword,driver):
     # if 1:
     #     ad_elements = driver.find_elements_by_css_selector("[class='style-scope yt-horizontal-list-renderer']")
     #     if ad_elements != None:
-    driver.maximize_window()
+    # driver.maximize_window()
 
     # check for additional ads
     if 1:
