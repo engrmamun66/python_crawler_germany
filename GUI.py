@@ -49,7 +49,7 @@ class GUI():
                     s=Service(PATH)
                     options = webdriver.ChromeOptions()
                     options.add_experimental_option('excludeSwitches', ['enable-automation'])
-                    driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
+                    driver = webdriver.Chrome(executable_path=Service(PATH), chrome_options=options)
                     # driver = webdriver.Chrome(service=s)
                     # driver = webdriver.Chrome(service=s, chrome_options=options)
                     try:
