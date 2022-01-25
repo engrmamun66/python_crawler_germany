@@ -151,8 +151,19 @@ def read_ads(input_keyword,driver):
     except Exception as e:
         pass
 
+    # check for Youtube Textanzeige
+    if 1:
+        driver.maximize_window()
+        ad_elements = driver.find_elements_by_id("items")
+        if ad_elements != None:
+            for i in ad_elements:
+                if i.get_attribute('class') == "style-scope yt-horizontal-list-renderer": 
+                    ad_elements = i
+                    break
+            print('>>>>> --- Youtube Shopping Ad count: '+ str(len(ad_elements)))
 
-    # check for additional ads
+
+    # check for Youtube Textanzeige
     if 1:
         additional_ad_elements = driver.find_elements_by_id("contents")
         if additional_ad_elements != None: # check if additional ad elements were found
@@ -160,7 +171,7 @@ def read_ads(input_keyword,driver):
                 if i.get_attribute('class') == "style-scope ytd-section-list-renderer": 
                     additional_ad_elements = i
                     break
-            print('>>>>> --- Youtube Textanzeige Ad count: '+ str(len(additional_children_by_css)))
+            print('>>>>> --- Youtube Textanzeige Ad count: '+ str(len(additional_ad_elements)))
             for i in additional_ad_elements.find_elements_by_xpath("./*"):
                 try:
                     res_1 = i.find_element_by_id("website-text").text 
