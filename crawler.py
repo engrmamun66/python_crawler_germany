@@ -35,8 +35,8 @@ def read_ads(input_keyword,driver):
     id_list = []
     rank = 0
     #options.add_argument('headless')
-    # driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
-    driver.maximize_window()
+    driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
+    # driver.maximize_window()
     # CRAWL GOOGLE -------------------------------------------------------------------------------------------------------------------------
     # navigate to Google website and accept cookies
     driver.get("https://www.google.de/search?q={}".format(input_keyword))
@@ -151,12 +151,43 @@ def read_ads(input_keyword,driver):
         searchbar.send_keys(Keys.RETURN)
     except Exception as e:
         pass
-    
-    if 1:
-        ad_elements = driver.find_elements_by_css_selector("[class='style-scope yt-horizontal-list-renderer']")
-        if ad_elements != None:
-            for i in ad_elements.find_elements_by_xpath("./*"):
-                print('>>>>> --- Youtube Shopping Ad')
+
+    # finding the ad section on the website if nothing found return empty lists
+    ad_elements = None
+    trys_youtube = 10 # number of tries to receive a result with ads
+    while True:
+        if trys_youtube <= 0: break
+        trys_youtube -= 1
+        try:
+            time.sleep(1)
+            ad_elements_list = driver.find_elements_by_id("items")
+            for i in ad_elements_list:
+                if i.get_attribute('class') == "style-scope yt-horizontal-list-renderer": 
+                    ad_elements = i
+                    break
+        except Exception as e:
+            pass
+    if ad_elements != None: # check if ad elements were found
+        driver.maximize_window()
+        time.sleep(1.5)
+        driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
+        for i in ad_elements.find_elements_by_xpath("./*"):
+            try:
+                res_1 = i.find_element_by_css_selector("[id='title-link']").get_attribute("href")
+                res_2 = i.find_element_by_css_selector("[id='title-text']").get_attribute("title")
+                res_3 = i.find_element_by_css_selector("[id='secondary-text']").get_attribute("title")
+                res_4 = i.find_element_by_css_selector("[id='body-text']").get_attribute("title")
+            except Exception as e:
+                continue
+            # only add the results to the lists when all information was read properly
+            rank += 1
+            rank_list.append(rank)
+            google_link_list.append(res_1)
+            google_title_list.append(res_2)
+            google_price_list.append(res_3)
+            google_seller_list.append(res_4)
+            google_ident_list.append("Youtube Shopping Ad")
+            id_list.append(screen_id + "_yt")
 
     # check for additional ads
     if 1:
