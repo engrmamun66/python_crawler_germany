@@ -172,6 +172,7 @@ def read_ads(input_keyword,driver):
         time.sleep(1.5)
         driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
         for i in ad_elements.find_elements_by_xpath("./*"):
+            print('>>>>> --- Youtube Shopping Ad')
             try:
                 res_1 = i.find_element_by_css_selector("[id='title-link']").get_attribute("href")
                 res_2 = i.find_element_by_css_selector("[id='title-text']").get_attribute("title")
