@@ -168,12 +168,9 @@ def read_ads(input_keyword,driver):
         except Exception as e:
             pass
     if ad_elements != None: # check if ad elements were found
-        # driver.maximize_window()
-        # time.sleep(1.5)
-        # driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
         print('>>>>> --- Youtube Shopping Ad count: '+ str(len(ad_elements)))
         for i in ad_elements.find_elements_by_xpath("./*"):
-            # print('>>>>> --- Youtube Shopping Ad')
+            print('>>>>> --- Youtube Shopping Ad')
             try:
                 res_1 = i.find_element_by_css_selector("[id='title-link']").get_attribute("href")
                 res_2 = i.find_element_by_css_selector("[id='title-text']").get_attribute("title")
@@ -236,7 +233,7 @@ def read_ads(input_keyword,driver):
     driver.close()
     # setup output
     output = [google_link_list, google_title_list, google_price_list, google_seller_list,brand_list, google_ident_list ,stamp , id_list, rank_list, youtube_link_list, youtube_title_list, youtube_price_list, youtube_seller_list, youtube_ident_list]
-    print(output)
+    # print(output)
     # print([len(google_link_list),len(google_title_list),len(google_price_list),len(google_seller_list),len(brand_list),len(google_ident_list),len(youtube_price_list),len(youtube_seller_list),])
     return output
 
