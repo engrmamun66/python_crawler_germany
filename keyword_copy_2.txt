@@ -2,4 +2,3 @@ Handy
 Fernseher 
 Reifen
 E-Scooter reifen
-TypeError: __init__() got an unexpected keyword argument 'service'
