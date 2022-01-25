@@ -152,10 +152,11 @@ def read_ads(input_keyword,driver):
     except Exception as e:
         pass
     
-    # if 1:
-    #     ad_elements = driver.find_elements_by_css_selector("[class='style-scope yt-horizontal-list-renderer']")
-    #     if ad_elements != None:
-    # driver.maximize_window()
+    if 1:
+        ad_elements = driver.find_elements_by_css_selector("[class='style-scope yt-horizontal-list-renderer']")
+        if ad_elements != None:
+            for i in ad_elements.find_elements_by_xpath("./*"):
+                print('>>>>> --- Youtube Shopping Ad')
 
     # check for additional ads
     if 1:
