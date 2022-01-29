@@ -68,7 +68,7 @@ class GUI():
                         results[keyword] = self.crawl(keyword,driver)
                         if len(results[keyword][0]) > 0:
                             break
-                        print(results)
+                        # print(results)
                     except Exception as e:
                         driver.close()
                         pass
@@ -101,14 +101,12 @@ class GUI():
         worksheet.write('H1', "Anbieter")# youtube result
         worksheet.write('I1', "Ad Anbieter")# youtube result
         worksheet.write('J1', "Ad Type")# youtube result
-        #print("--------------------------------------", len(result))
         zahl = 1
         for i, (keyword, result) in enumerate(results.items()):
             for j in range(0, len(result[0])):
                     stopword = 0
                     for word in stopwords: 
                         if word in result[0][j] or word in result[3][j]:
-                            print("stopword-----------")
                             stopword = 1
                             zahl -=1
                             break
@@ -117,7 +115,7 @@ class GUI():
                     zahl +=1
                     if stopword == 0:
                         try:
-                            print(zahl)
+                            # print(zahl)
                             worksheet.write('A{}'.format(zahl), result[7][j]) # screen id
                             worksheet.write('B{}'.format(zahl), result[8][j])# rank
                             worksheet.write('C{}'.format(zahl), result[6]) #datum uhrzeit
@@ -132,7 +130,6 @@ class GUI():
 
                             
                             
-                            #print(results[5][j])
                             ''' V2 not needed
                             if j < len(result[5]):
                                 worksheet.write('H{}'.format(j+1), j+1)# rank
