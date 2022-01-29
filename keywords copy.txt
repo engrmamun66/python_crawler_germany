@@ -1,8 +1,17 @@
+Autofinanzierung
+Autoversicherung
+Schmerzmittel rezeptfrei
+Mittel gegen Übligkeit
 sommerreifen
 winterreifen
 E-Scooter reifen 10 Zoll
+<<<<<<< HEAD
 Frenseher
 Krankenversicherung
+=======
+Fernseher
+Krankenversicheurng
+>>>>>>> 98fe4093630727c7516e2fa48303ceec0f986cc7
 Lebensversicherung
 Girokonto
 Kreditkarte
