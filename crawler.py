@@ -240,7 +240,10 @@ def read_ads(input_keyword,driver):
                     google_link_list.append(res_1)
                     google_title_list.append(res_2)
                     google_price_list.append("")
-                    google_seller_list.append("")
+                    if(len(res_4)):
+                        google_seller_list.append(res_4)
+                    else:
+                        google_seller_list.append(res_1)
                     google_ident_list.append("Youtube Textanzeige")
                     id_list.append(screen_id + "_yt")
                     print("Youtbe Text")
