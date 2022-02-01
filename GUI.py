@@ -44,7 +44,8 @@ class GUI():
             for keyword in keywords.readlines():
                     PATH = r"chromedriver_win32/chromedriver.exe" #  path to chrome driver
                     options = webdriver.ChromeOptions()
-                    options.add_experimental_option('excludeSwitches', ['enable-automation'])
+                    options.add_argument('headless')  # show or hide
+                    # options.add_experimental_option('excludeSwitches', ['enable-automation'])
                     driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
                     try:
                         results[keyword] = crawler.read_ads(keyword,driver)
@@ -63,6 +64,7 @@ class GUI():
                     PATH = r"chromedriver_win32/chromedriver.exe" #  path to chrome driver
                     options = webdriver.ChromeOptions()
                     options.add_experimental_option('excludeSwitches', ['enable-automation'])
+                    options.add_argument('headless') #show or hide
                     driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
                     try:
                         results[keyword] = self.crawl(keyword,driver)

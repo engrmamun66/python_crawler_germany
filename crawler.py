@@ -64,7 +64,7 @@ def read_ads(input_keyword,driver):
         # finding the ad section on the website if nothing found continue with youtube ads
         scrolling_carousel = driver.find_element_by_class_name("{1}".format("pla-exp-container","cu-container"))
 
-        time.sleep(1.5)
+        # time.sleep(0)
         all_children_by_css = scrolling_carousel.find_elements_by_css_selector("[class='mnr-c pla-unit']")
         print('>>>>> --- Google Shopping Ad count: '+ str(len(all_children_by_css)))
 
@@ -105,7 +105,7 @@ def read_ads(input_keyword,driver):
             google_ident_list.append("Google Shopping Ad")
             brand_list.append(str(res_5))
             id_list.append(str(screen_id) + "_g")
-        time.sleep(1.5)
+        # time.sleep(0)
         additional_children_by_css = driver.find_elements_by_css_selector("[class='uEierd']")
         print('>>>>> --- Google Textanzeige Ad count: '+ str(len(additional_children_by_css)))
         rank = 0
@@ -164,7 +164,7 @@ def read_ads(input_keyword,driver):
             if trys_youtube <= 0: break
             trys_youtube -= 1
             try:
-                time.sleep(1.5)
+                # time.sleep(0)
                 ad_elements_list = driver.find_elements_by_id("items")
                 for i in ad_elements_list:
                     if i.get_attribute('class') == "style-scope yt-horizontal-list-renderer": 
@@ -174,7 +174,7 @@ def read_ads(input_keyword,driver):
                 pass
         if ad_elements != None: # check if ad elements were found
             driver.maximize_window()
-            time.sleep(1.5)
+            # time.sleep(0)
             driver.set_window_size(700, 1080) # set window size to 700*1080 pixel
             rank = 0
             for i in ad_elements.find_elements_by_xpath("./*"):
