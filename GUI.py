@@ -36,23 +36,28 @@ class GUI():
         self.start_crawler.place(x=20, y=240)
         self.gui.mainloop()
 
-    def start(self):
+    def start(self, openBrowser=True):
         kw_list = self.variable.get()
         if self.keywords.compare("end-1c", "==", "1.0"):
             keywords = open(kw_list,'r', encoding='utf8') 
             results = {}
             for keyword in keywords.readlines():
-                    PATH = r"chromedriver_win32/chromedriver.exe" #  path to chrome driver
+                PATH = r"chromedriver_win32/chromedriver.exe" 
+                if(openBrowser) :              
                     options = webdriver.ChromeOptions()
                     options.add_experimental_option('excludeSwitches', ['enable-automation'])
                     driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
-                    try:
-                        results[keyword] = crawler.read_ads(keyword,driver)
-                        '''if len(results[keyword][0]) > 0:         debug
-                            break'''
-                    except Exception as e:
-                        driver.close()
-                        pass
+                if(not openBrowser):
+                    option = webdriver.ChromeOptions()
+                    option.add_argument('headless')
+                    driver = webdriver.Chrome(PATH, options=option)
+                try:
+                    results[keyword] = crawler.read_ads(keyword,driver)
+                    '''if len(results[keyword][0]) > 0:         debug
+                        break'''
+                except Exception as e:
+                    driver.close()
+                    pass
             self.safe(results)
         else:
             keywords = self.keywords.get("1.0",END).split("\n")
@@ -104,43 +109,43 @@ class GUI():
         zahl = 1
         for i, (keyword, result) in enumerate(results.items()):
             for j in range(0, len(result[0])):
-                    stopword = 0
-                    for word in stopwords: 
-                        if word in result[0][j] or word in result[3][j]:
-                            stopword = 1
-                            zahl -=1
-                            break
-                        else:
-                            continue
-                    zahl +=1
-                    if stopword == 0:
-                        try:
-                            # print(zahl)
-                            worksheet.write('A{}'.format(zahl), result[7][j]) # screen id
-                            worksheet.write('B{}'.format(zahl), result[8][j])# rank
-                            worksheet.write('C{}'.format(zahl), result[6]) #datum uhrzeit
-                            worksheet.write('D{}'.format(zahl), keyword) #datum uhrzeit
-                            worksheet.write('E{}'.format(zahl), result[0][j])# google result
-                            worksheet.write('F{}'.format(zahl), result[1][j])# google result
-                            worksheet.write('G{}'.format(zahl), result[2][j])# google result
-                            worksheet.write('H{}'.format(zahl), result[3][j])# google result
-                            worksheet.write('J{}'.format(zahl), result[5][j])# google ident result
-                            worksheet.write('I{}'.format(zahl), result[4][j])# Von Google / ..
-                            
+                stopword = 0
+                for word in stopwords: 
+                    if word in result[0][j] or word in result[3][j]:
+                        stopword = 1
+                        zahl -=1
+                        break
+                    else:
+                        continue
+                zahl +=1
+                if stopword == 0:
+                    try:
+                        # print(zahl)
+                        worksheet.write('A{}'.format(zahl), result[7][j]) # screen id
+                        worksheet.write('B{}'.format(zahl), result[8][j])# rank
+                        worksheet.write('C{}'.format(zahl), result[6]) #datum uhrzeit
+                        worksheet.write('D{}'.format(zahl), keyword) #datum uhrzeit
+                        worksheet.write('E{}'.format(zahl), result[0][j])# google result
+                        worksheet.write('F{}'.format(zahl), result[1][j])# google result
+                        worksheet.write('G{}'.format(zahl), result[2][j])# google result
+                        worksheet.write('H{}'.format(zahl), result[3][j])# google result
+                        worksheet.write('J{}'.format(zahl), result[5][j])# google ident result
+                        worksheet.write('I{}'.format(zahl), result[4][j])# Von Google / ..
+                        
 
-                            
-                            
-                            ''' V2 not needed
-                            if j < len(result[5]):
-                                worksheet.write('H{}'.format(j+1), j+1)# rank
-                            worksheet.write('I{}'.format(j+1), result[5][j])# youtube result
-                            worksheet.write('J{}'.format(j+1), result[6][j])# youtube result
-                            worksheet.write('K{}'.format(j+1), result[7][j])# youtube result
-                            worksheet.write('L{}'.format(j+1), result[8][j])# youtube result
-                            worksheet.write('M{}'.format(j+1), result[9][j])# youtube result
-                            '''
-                        except:
-                            continue
+                        
+                        
+                        ''' V2 not needed
+                        if j < len(result[5]):
+                            worksheet.write('H{}'.format(j+1), j+1)# rank
+                        worksheet.write('I{}'.format(j+1), result[5][j])# youtube result
+                        worksheet.write('J{}'.format(j+1), result[6][j])# youtube result
+                        worksheet.write('K{}'.format(j+1), result[7][j])# youtube result
+                        worksheet.write('L{}'.format(j+1), result[8][j])# youtube result
+                        worksheet.write('M{}'.format(j+1), result[9][j])# youtube result
+                        '''
+                    except:
+                        continue
         workbook.close()
         return
 
