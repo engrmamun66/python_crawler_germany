@@ -65,10 +65,15 @@ class GUI():
             results = {}
             for keyword in keywords:
                 for i in range(1):
-                    PATH = r"chromedriver_win32/chromedriver.exe" #  path to chrome driver
-                    options = webdriver.ChromeOptions()
-                    options.add_experimental_option('excludeSwitches', ['enable-automation'])
-                    driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
+                    PATH = r"chromedriver_win32/chromedriver.exe" 
+                    if(openBrowser) :              
+                        options = webdriver.ChromeOptions()
+                        options.add_experimental_option('excludeSwitches', ['enable-automation'])
+                        driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
+                    if(not openBrowser):
+                        option = webdriver.ChromeOptions()
+                        option.add_argument('headless')
+                        driver = webdriver.Chrome(PATH, options=option)
                     try:
                         results[keyword] = self.crawl(keyword,driver)
                         if len(results[keyword][0]) > 0:
