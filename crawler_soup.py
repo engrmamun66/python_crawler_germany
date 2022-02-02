@@ -90,15 +90,15 @@ def read_ads(input_keyword, open_browser=False):
             try: ident_von = eachBlock.find('div', class_='Qp6aMc').get_text()
             except: ident_von = ''
 
-            print(f"=============Google Shopping Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nident_von : {ident_von}\keyword: {input_keyword}")
 
             if(
-                # len(link) and link[0:4] == 'http'and 
-                len(title)
-               and len(price)
-               and len(anbieter)
-               and len(ident_von)
+            len(link) and link[0:4] == 'http'
+            and len(title)
+            and len(price)
+            and len(anbieter)
+            and len(ident_von)
                ):
+                print(f"=============Google Shopping Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nident_von : {ident_von}\keyword: {input_keyword}")
                 rank += 1
                 rank_list.append(str(rank))
                 google_link_list.append(str(link))
@@ -130,13 +130,14 @@ def read_ads(input_keyword, open_browser=False):
             try: anbieter = eachBlock.find('div', class_='v5yQqb').find('a')['href'] 
             except: anbieter = link
             
-            print(f"=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
 
-            if(len(link) and link[0:4] == 'http'
+            if(
+            len(link) and link[0:4] == 'http'
             and len(title) 
             and len(anbieter) 
             and anbieter[0:4] == 'http'
             ):
+                print(f"=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
                 rank += 1
                 rank_list.append(str(rank))
                 google_link_list.append(str(link))
