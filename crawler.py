@@ -257,7 +257,6 @@ def read_ads(input_keyword,driver):
 
 
 
-
 if __name__ == "__main__":
     PATH = "chromedriver_win32/chromedriver.exe" #  path to chrome driver
     options = webdriver.ChromeOptions()
