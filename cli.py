@@ -12,12 +12,12 @@ code_start_time = time.time()
 def get_inputed_keyword_file_name_by_cli():
     myFiles = glob.glob('*.txt')
     myFiles = [file for file in myFiles if(file != 'stopwords.txt')]
-    filetext = '     # Your Text File List:\n--------------------------\n'
+    filetext = '     # Your Text File List:\n     --------------------------\n'
     for i in range(len(myFiles)):
         filetext += "       " + str(i+1)+") " + myFiles[i] + "\n"
 
-    filetext += '--------------------------\n'
-    _index = int(input(f"{filetext}#      Type Index Of keyword File: "))
+    filetext += '     --------------------------\n'
+    _index = int(input(f"{filetext}     # Type Index Of keyword File: "))
     try:
         inputeFileName = myFiles[_index-1]
     except: inputeFileName = '' 
