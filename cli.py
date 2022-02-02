@@ -2,6 +2,7 @@ import time
 from tkinter import *
 from datetime import datetime
 import crawler_soup
+global xlsxwriter
 import xlsxwriter
 import os
 import sys
@@ -21,7 +22,7 @@ def get_inputed_keyword_file_name_by_cli():
     except: inputeFileName = '' 
     
     if(len(inputeFileName)):
-        print(f'     ({inputeFileName}) Crawl is starting...  ')
+        print(f'     (\n{inputeFileName}) Crawl is starting...  ')
         time.sleep(2)
     return inputeFileName
 
