@@ -60,7 +60,7 @@ def read_ads(input_keyword, open_browser=False):
     # =======================================
     # ========== WITH GOOGLE ================
     # =======================================
-    # =============================== ========
+    # =======================================
     driver.get("https://www.google.de/search?q={}".format(input_keyword))
     content = driver.page_source.encode('utf-8').strip()
     soup = BeautifulSoup(content, 'lxml')
@@ -145,9 +145,38 @@ def read_ads(input_keyword, open_browser=False):
                 google_ident_list.append("Google Textanzeige")
                 id_list.append(str(screen_id) + "_g")
 
+
+
+
+
+
+
+    # =======================================
+    # =======================================
+    # ========== WITH YOUTUBE ===============
+    # =======================================
+    # =======================================
+    driver.get("https://www.youtube.com/results?search_query={}".format(input_keyword))
+    content = driver.page_source.encode('utf-8').strip()
+    soup = BeautifulSoup(content, 'lxml')
+
+
     # ==================================
     # =========== Youtube Textanzeige Ad
     # ==================================
+    if 1:
+        contents = soup.find_all('div', class_='uEierd')
+        rank = 0
+        for eachBlock in contents:
+
+
+
+
+
+
+
+
+
 
     # close web driver
     driver.close()
