@@ -72,9 +72,9 @@ class GUI():
     def safe(self,results):
         print('=============================')
         print('========== THE END ==========')
-        print('=============================')
-        print('||||||||||||||||||||||| Stop to create excel')
-        return
+        # print('=============================')
+        # print('||||||||||||||||||||||| Stop to create excel')
+        # return
         time_now = str(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
         workbook = xlsxwriter.Workbook('crawl_' + time_now + '.xlsx')
         stopwords = open("stopwords.txt")

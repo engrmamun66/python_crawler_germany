@@ -34,6 +34,18 @@ def read_ads(input_keyword, open_browser=False):
     id_list = []
     rank = 0
 
+
+    def getPriceFromTitle(title=''):
+        myTitle = title.strip().replace('    ', '   ').replace('   ', '  ').replace(
+        '  ', ' ').replace(' €', '€').replace('*, \d', ',\d')
+        result = ''
+        if('€' in myTitle):
+            for x in myTitle.split():
+                if('€' in x):
+                    result = x            
+        return result
+
+
     # open_browser = 1
     if not open_browser:
         options = webdriver.ChromeOptions()
@@ -97,9 +109,9 @@ def read_ads(input_keyword, open_browser=False):
                 id_list.append(str(screen_id) + "_g")
 
 
-    # ==========================
-    # =========== Google Text Ad
-    # ==========================
+    # =================================
+    # =========== Google Textanzeige Ad
+    # =================================
     if 1:
         contents = soup.find_all('div', class_='uEierd')
         rank = 0
@@ -110,10 +122,14 @@ def read_ads(input_keyword, open_browser=False):
             try: title = eachBlock.find('div', role='heading', class_='CCgQ5').find('span').get_text() #Note: may be change class_ name
             except: title=''            
 
+            try: 
+                price = getPriceFromTitle(title)
+            except: price=''            
+
             try: anbieter = eachBlock.find('div', class_='v5yQqb').find('a')['href'] 
             except: anbieter = link
             
-            print(f"=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
+            print(f"=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
 
             if(len(link) and link[0:4] == 'http'
             and len(title) 
@@ -124,12 +140,14 @@ def read_ads(input_keyword, open_browser=False):
                 rank_list.append(str(rank))
                 google_link_list.append(str(link))
                 google_title_list.append(str(title))
-                google_price_list.append("")
+                google_price_list.append(str(price))
                 google_anbieter_list.append(str(anbieter))
                 google_ident_list.append("Google Textanzeige")
                 id_list.append(str(screen_id) + "_g")
 
-   
+    # ==================================
+    # =========== Youtube Textanzeige Ad
+    # ==================================
 
     # close web driver
     driver.close()
