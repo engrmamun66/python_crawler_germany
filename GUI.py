@@ -1,6 +1,6 @@
 ﻿from tkinter import *
 from datetime import datetime
-import crawler
+import crawler_soup
 global xlsxwriter
 import xlsxwriter
 from selenium import webdriver
