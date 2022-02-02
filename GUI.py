@@ -3,11 +3,8 @@ from datetime import datetime
 import crawler_soup
 global xlsxwriter
 import xlsxwriter
-from selenium import webdriver
 import glob
 import os
-import csv
-import pdb
 
 
 
@@ -42,16 +39,13 @@ class GUI():
             keywords = open(kw_list,'r', encoding='utf8') 
             results = {}
             for keyword in keywords.readlines():
-                    PATH = r"chromedriver_win32/chromedriver.exe" #  path to chrome driver
-                    options = webdriver.ChromeOptions()
-                    options.add_experimental_option('excludeSwitches', ['enable-automation'])
-                    driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
+                    
                     try:
-                        results[keyword] = crawler.read_ads(keyword,driver)
+                        results[keyword] = crawler_soup.read_ads(keyword,False) #fff
                         '''if len(results[keyword][0]) > 0:         debug
                             break'''
                     except Exception as e:
-                        driver.close()
+                        
                         pass
             self.safe(results)
         else:
@@ -60,23 +54,20 @@ class GUI():
             results = {}
             for keyword in keywords:
                 for i in range(1):
-                    PATH = r"chromedriver_win32/chromedriver.exe" #  path to chrome driver
-                    options = webdriver.ChromeOptions()
-                    options.add_experimental_option('excludeSwitches', ['enable-automation'])
-                    driver = webdriver.Chrome(executable_path=PATH, chrome_options=options)
+                    
                     try:
-                        results[keyword] = self.crawl(keyword,driver)
+                        results[keyword] = self.crawl(keyword, False)
                         if len(results[keyword][0]) > 0:
                             break
                         # print(results)
                     except Exception as e:
-                        driver.close()
+                        
                         pass
             self.safe(results)
             
 
     def crawl(self,keyword,driver):
-        return crawler.read_ads(keyword,driver)
+        return crawler_soup.read_ads(keyword,False)#fff
 
     def safe(self,results):
         time_now = str(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
