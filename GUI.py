@@ -67,11 +67,12 @@ class GUI():
             
 
     def crawl(self,keyword,driver):
-        return crawler_soup.read_ads(keyword,False)#fff
+        return crawler_soup.read_ads(keyword, False)#fff
 
     def safe(self,results):
-        print('||||||||||||||||||||||| Stop to create excel')
-        return
+        print('========== THE END ==========')
+        # print('||||||||||||||||||||||| Stop to create excel')
+        # return
         time_now = str(datetime.now().strftime('%Y_%m_%d_%H_%M_%S'))
         workbook = xlsxwriter.Workbook('crawl_' + time_now + '.xlsx')
         stopwords = open("stopwords.txt")
@@ -119,19 +120,7 @@ class GUI():
                             worksheet.write('H{}'.format(zahl), result[3][j])# google result
                             worksheet.write('J{}'.format(zahl), result[5][j])# google ident result
                             worksheet.write('I{}'.format(zahl), result[4][j])# Von Google / ..
-                            
-
-                            
-                            
-                            ''' V2 not needed
-                            if j < len(result[5]):
-                                worksheet.write('H{}'.format(j+1), j+1)# rank
-                            worksheet.write('I{}'.format(j+1), result[5][j])# youtube result
-                            worksheet.write('J{}'.format(j+1), result[6][j])# youtube result
-                            worksheet.write('K{}'.format(j+1), result[7][j])# youtube result
-                            worksheet.write('L{}'.format(j+1), result[8][j])# youtube result
-                            worksheet.write('M{}'.format(j+1), result[9][j])# youtube result
-                            '''
+                           
                         except:
                             continue
         workbook.close()
