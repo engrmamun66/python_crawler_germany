@@ -80,7 +80,7 @@ try:
 except:
     pass
 
-keywords = open(r'keywords.txt','r', encoding='utf8') 
+keywords = open(r'keywords-all.txt','r', encoding='utf8') 
 results = {}
 for keyword in keywords.readlines():        
         try:

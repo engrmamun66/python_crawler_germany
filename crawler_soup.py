@@ -168,7 +168,7 @@ def read_ads(input_keyword, open_browser=False):
         contents = soup.find_all('div', class_='uEierd')
         rank = 0
         for eachBlock in contents:
-
+            pass
 
 
 
