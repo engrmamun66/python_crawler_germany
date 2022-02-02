@@ -1,8 +1,30 @@
+import time
 from tkinter import *
 from datetime import datetime
 import crawler_soup
 import xlsxwriter
 import os
+import sys
+import glob
+
+def get_inputed_keyword_file_name_by_cli():
+    myFiles = glob.glob('*.txt')
+    myFiles = [file for file in myFiles if(file != 'stopwords.txt')]
+    filetext = '# Your Text File List:\n--------------------------\n'
+    for i in range(len(myFiles)):
+        filetext += "  " + str(i+1)+") " + myFiles[i] + "\n"
+
+    filetext += '--------------------------\n'
+    _index = int(input(f"{filetext}# Type Index Of keyword File: "))
+    try:
+        inputeFileName = myFiles[_index-1]
+    except: inputeFileName = '' 
+    
+    if(len(inputeFileName)):
+        print(f'     ({inputeFileName}) Crawl is starting...  ')
+        time.sleep(2)
+    return inputeFileName
+
 
 
 def crawl(keyword,driver):
@@ -80,7 +102,9 @@ try:
 except:
     pass
 
-keywords = open(r'keywords-all.txt','r', encoding='utf8') 
+fileName_fromCli = get_inputed_keyword_file_name_by_cli()
+
+keywords = open(r''+fileName_fromCli,'r', encoding='utf8') 
 results = {}
 for keyword in keywords.readlines():        
         try:
