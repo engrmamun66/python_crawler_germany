@@ -8,24 +8,24 @@ import os
 import sys
 import glob
 
+code_start_time = time.time()
 def get_inputed_keyword_file_name_by_cli():
     myFiles = glob.glob('*.txt')
     myFiles = [file for file in myFiles if(file != 'stopwords.txt')]
-    filetext = '# Your Text File List:\n--------------------------\n'
+    filetext = '     # Your Text File List:\n--------------------------\n'
     for i in range(len(myFiles)):
-        filetext += "  " + str(i+1)+") " + myFiles[i] + "\n"
+        filetext += "       " + str(i+1)+") " + myFiles[i] + "\n"
 
     filetext += '--------------------------\n'
-    _index = int(input(f"{filetext}# Type Index Of keyword File: "))
+    _index = int(input(f"{filetext}#      Type Index Of keyword File: "))
     try:
         inputeFileName = myFiles[_index-1]
     except: inputeFileName = '' 
     
     if(len(inputeFileName)):
-        print(f'     (\n{inputeFileName}) Crawl is starting...  ')
+        print(f'\n     ({inputeFileName}) Crawl is starting...  ')
         time.sleep(2)
     return inputeFileName
-
 
 
 def crawl(keyword,driver):
@@ -79,6 +79,11 @@ def safe(results):
                     except:
                         continue
     workbook.close()
+    print("======================")
+    print("--- %s seconds ---" % (round(time.time() - code_start_time, 2)))
+    print("======================")
+    wait_=input()
+
     return
 
 try:
