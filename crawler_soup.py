@@ -92,8 +92,9 @@ def read_ads(input_keyword, open_browser=False):
 
             print(f"=============Google Shopping Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nident_von : {ident_von}\keyword: {input_keyword}")
 
-            if(len(link) and link[0:4] == 'http'
-               and len(title)
+            if(
+                # len(link) and link[0:4] == 'http'and 
+                len(title)
                and len(price)
                and len(anbieter)
                and len(ident_von)
