@@ -79,6 +79,7 @@ def safe(results):
                     except:
                         continue
     workbook.close()
+    print("\n\n\n Total Execution Time:")
     print("======================")
     print("--- %s seconds ---" % (round(time.time() - code_start_time, 2)))
     print("======================")
@@ -110,7 +111,7 @@ except:
 
 fileName_fromCli = get_inputed_keyword_file_name_by_cli()
 
-keywords = open(r''+fileName_fromCli,'r', encoding='utf8') 
+keywords = open(fileName_fromCli,'r', encoding='utf8') 
 results = {}
 for keyword in keywords.readlines():        
         try:
