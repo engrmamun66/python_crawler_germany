@@ -3,6 +3,8 @@ from posixpath import islink
 from sqlite3 import TimeFromTicks
 from warnings import catch_warnings
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from datetime import datetime
 import time
@@ -50,8 +52,8 @@ def read_ads(input_keyword, open_browser=False):
     if not open_browser:
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
-        driver = webdriver.Chrome(
-            'chromedriver_win32/chromedriver.exe', options=options)
+        ser = Service("chromedriver_win32/chromedriver.exe")
+        driver = webdriver.Chrome(service=ser, options=options)
     else:
         options = webdriver.ChromeOptions()
         driver = webdriver.Chrome('chromedriver_win32/chromedriver.exe')
