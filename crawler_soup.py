@@ -70,7 +70,7 @@ def read_ads(input_keyword, open_browser=False):
     # ==============================
     # =========== Google Shopping Ad
     # ============================== 
-    if 1:
+    if 0:
         contents = soup.find_all('div', class_='mnr-c pla-unit')
         rank = 0
         for eachBlock in contents:
@@ -115,7 +115,7 @@ def read_ads(input_keyword, open_browser=False):
     # =================================
     # =========== Google Textanzeige Ad
     # =================================
-    if 1:
+    if 0:
         contents = soup.find_all('div', class_='uEierd')
         rank = 0
         for eachBlock in contents:
