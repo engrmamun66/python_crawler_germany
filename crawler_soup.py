@@ -168,6 +168,11 @@ def read_ads(input_keyword, open_browser=False):
     # ==================================
     # =========== Youtube Textanzeige Ad
     # ==================================
+    if 1:
+        print('I am here.')
+        contents = soup.find_all('div', class_='style-scope ytd-section-list-renderer"')
+        print((contents))
+
     if 0:
         # contents = soup.findAll('div', id='contents')[1].find_all('div', id='contents').find_all('div', id='sparkles-container
         # contents = soup.findAll( id='contents', limit=1) #working
