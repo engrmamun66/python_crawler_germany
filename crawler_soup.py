@@ -166,11 +166,38 @@ def read_ads(input_keyword, open_browser=False):
     # ==================================
     # =========== Youtube Textanzeige Ad
     # ==================================
-    if 1:
-        contents = soup.find_all('div', class_='uEierd')
+    if 0:
+        # contents = soup.findAll('div', id='contents')[1].find_all('div', id='contents').find_all('div', id='sparkles-container
+        # contents = soup.findAll( id='contents', limit=1) #working
+        contents = soup.find_all('div', id='sparkles-container')
+        print((contents))
+        # print('len(contents)')
+        # print(len(contents))
+
         rank = 0
         for eachBlock in contents:
-            pass
+            print(f'--{input_keyword}----------------------------------------------------------------------------')
+            block = eachBlock.find('div', id='contents')
+            title = (block.find('h3').get_text())
+            print(block.find('div', id='website-text').get_text())
+
+            # print(block.find('div', id='sparkles-container').find('h3').get_text())
+
+            # try:
+            #     link1 = block.find('div', id='website-text').get_text()
+            # except:
+            #     link1 = ''
+            # try:
+            #     link2 = block.find('div', id='display-url').get_text()
+            # except:
+            #     link2 = ''
+
+            # link = link1 + link2 #
+
+            # try: title = block.find('h3', id='title').get_text()
+            # except: title = ''
+
+            # print( f"=============Youtube Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nAnbieter : {nlink}\nkeyword: {input_keyword}")
 
 
 
