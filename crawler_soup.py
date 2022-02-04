@@ -120,16 +120,16 @@ def read_ads(input_keyword, open_browser=False):
         rank = 0
         for eachBlock in contents:
             try: link = eachBlock.find('span', role="text").get_text()
-            except: link = ''        
+            except: link = ''
 
             try: title = eachBlock.find('div', role='heading', class_='CCgQ5').find('span').get_text() #Note: may be change class_ name
-            except: title=''            
+            except: title=''
 
-            try: 
+            try:
                 price = getPriceFromTitle(title)
-            except: price=''            
+            except: price=''
 
-            try: anbieter = eachBlock.find('div', class_='v5yQqb').find('a')['href'] 
+            try: anbieter = eachBlock.find('div', class_='v5yQqb').find('a')['href']
             except: anbieter = link
             
 
@@ -171,20 +171,29 @@ def read_ads(input_keyword, open_browser=False):
     # ==================================
     if 1:
         print('I am here.')
-        youtube_contents = youtube_soup.find_all('div', class_='contents')
+        # youtube_contents = youtube_soup.find_all('div', class_='contents')
 
+        youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-item-section-renderer sparkles-light-cta')
         # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class_='style-scope ytd-section-list-renderer')
         # print(len(youtube_contents))
 
-        if youtube_contents != None:
-            for i in youtube_contents:
-                if i.get_attribute('class') == "style-scope ytd-section-list-renderer":
-                    youtube_contents = i
-                    break
+        # if youtube_contents != None:
+        #     for i in youtube_contents:
+        #         if i.get_attribute('class') == "style-scope ytd-section-list-renderer":
+        #             youtube_contents = i
+        #             break
         print(len(youtube_contents))
         rank = 0
+        for eachBlock in contents:
+            # try: link = eachBlock.find('span', role="text").get_text()
+            # except: link = ''
+
+            try: title = eachBlock.find('div', class_='style-scope ytd-promoted-sparkles-web-renderer').find('h3').get_text()
+            except: title=''
+
+            print(title)
 
     if 0:
         # contents = soup.findAll('div', id='contents')[1].find_all('div', id='contents').find_all('div', id='sparkles-container
