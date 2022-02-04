@@ -162,8 +162,12 @@ def read_ads(input_keyword, open_browser=False):
     # =======================================
     driver.get("https://www.youtube.com/results?search_query={}".format(input_keyword))
     youtube_content = driver.page_source.encode('utf-8').strip()
-    youtube_soup = BeautifulSoup(youtube_content, 'lxml')
+    # youtube_soup = BeautifulSoup(youtube_content, 'lxml')
     # print(youtube_soup)
+
+    youtube_soup=BeautifulSoup(youtube_content,'html.parser')
+    res=youtube_soup.find_all('h3',{'id':'title'})
+    
 
 
     # ==================================
@@ -171,10 +175,12 @@ def read_ads(input_keyword, open_browser=False):
     # ==================================
     if 1:
         print('I am here.')
+        for l in res:
+            print(l)
         # youtube_contents = youtube_soup.find_all('div', class_='contents')
 
         # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-item-section-renderer sparkles-light-cta')
-        youtube_contents = youtube_soup.find_all('div', id_='sparkles-body')
+        # youtube_contents = youtube_soup.find_all('div', id_='sparkles-body')
         # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class_='style-scope ytd-section-list-renderer')
@@ -185,7 +191,7 @@ def read_ads(input_keyword, open_browser=False):
         #         if i.get_attribute('class') == "style-scope ytd-section-list-renderer":
         #             youtube_contents = i
         #             break
-        print(len(youtube_contents))
+        # print(len(youtube_contents))
         # rank = 0
         # for eachBlock in youtube_contents:
 
