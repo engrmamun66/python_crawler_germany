@@ -1,6 +1,8 @@
 from ast import keyword
+from json.tool import main
 from posixpath import islink
 from sqlite3 import TimeFromTicks
+from tkinter import Grid
 from warnings import catch_warnings
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -36,17 +38,15 @@ def read_ads(input_keyword, open_browser=False):
     id_list = []
     rank = 0
 
-
     def getPriceFromTitle(title=''):
         myTitle = title.strip().replace('    ', '   ').replace('   ', '  ').replace(
-        '  ', ' ').replace(' €', '€').replace('*, \d', ',\d')
+            '  ', ' ').replace(' €', '€').replace('*, \d', ',\d')
         result = ''
         if('€' in myTitle):
             for x in myTitle.split():
                 if('€' in x):
-                    result = x            
+                    result = x
         return result
-
 
     # open_browser = 1
     if not open_browser:
@@ -69,38 +69,48 @@ def read_ads(input_keyword, open_browser=False):
 
     # ==============================
     # =========== Google Shopping Ad
-    # ============================== 
-    if 1:
+    # ==============================
+    if 0:
         contents = soup.find_all('div', class_='mnr-c pla-unit')
         rank = 0
         for eachBlock in contents:
-            try:            
+            try:
                 link = eachBlock.find('div', class_='ropLT').find('a')['href']
-            except: link = ''
+            except:
+                link = ''
 
-            try: title = eachBlock.find('div', class_='r4awE').get_text()
-            except: title = '' 
+            try:
+                title = eachBlock.find('div', class_='r4awE').get_text()
+            except:
+                title = ''
 
             # try: price = eachBlock.find('span', class_='e10twf').get_text()
-            try: price = eachBlock.find('span', text=re.compile(".*€.*")).get_text()
+            try:
+                price = eachBlock.find(
+                    'span', text=re.compile(".*€.*")).get_text()
             except:
                 price = '€0.00'
 
-            try: anbieter = eachBlock.find('div', class_='LbUacb').find('span').get_text()
-            except: anbieter = ''
+            try:
+                anbieter = eachBlock.find(
+                    'div', class_='LbUacb').find('span').get_text()
+            except:
+                anbieter = ''
 
-            try: ident_von = eachBlock.find('div', class_='Qp6aMc').get_text()
-            except: ident_von = ''
-
+            try:
+                ident_von = eachBlock.find('div', class_='Qp6aMc').get_text()
+            except:
+                ident_von = ''
 
             if(
-            len(link) and link[0:4] == 'http'
-            and len(title)
-            and len(price)
-            and len(anbieter)
-            and len(ident_von)
-               ):
-                print(f"=============Google Shopping Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nident_von : {ident_von}\keyword: {input_keyword}")
+                len(link) and link[0:4] == 'http'
+                and len(title)
+                and len(price)
+                and len(anbieter)
+                and len(ident_von)
+            ):
+                print(
+                    f"=============Google Shopping Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nident_von : {ident_von}\keyword: {input_keyword}")
                 rank += 1
                 rank_list.append(str(rank))
                 google_link_list.append(str(link))
@@ -111,35 +121,43 @@ def read_ads(input_keyword, open_browser=False):
                 google_ident_list.append("Google Shopping Ad")
                 id_list.append(str(screen_id) + "_g")
 
-
     # =================================
     # =========== Google Textanzeige Ad
     # =================================
-    if 1:
+    if 0:
         contents = soup.find_all('div', class_='uEierd')
         rank = 0
         for eachBlock in contents:
-            try: link = eachBlock.find('span', role="text").get_text()
-            except: link = ''        
+            try:
+                link = eachBlock.find('span', role="text").get_text()
+            except:
+                link = ''
 
-            try: title = eachBlock.find('div', role='heading', class_='CCgQ5').find('span').get_text() #Note: may be change class_ name
-            except: title=''            
+            try:
+                title = eachBlock.find('div', role='heading', class_='CCgQ5').find(
+                    'span').get_text()  # Note: may be change class_ name
+            except:
+                title = ''
 
-            try: 
+            try:
                 price = getPriceFromTitle(title)
-            except: price=''            
+            except:
+                price = ''
 
-            try: anbieter = eachBlock.find('div', class_='v5yQqb').find('a')['href'] 
-            except: anbieter = link
-            
+            try:
+                anbieter = eachBlock.find(
+                    'div', class_='v5yQqb').find('a')['href']
+            except:
+                anbieter = link
 
             if(
-            len(link) and link[0:4] == 'http'
-            and len(title) 
-            and len(anbieter) 
-            and anbieter[0:4] == 'http'
+                len(link) and link[0:4] == 'http'
+                and len(title)
+                and len(anbieter)
+                and anbieter[0:4] == 'http'
             ):
-                print(f"=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
+                print(
+                    f"=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
                 rank += 1
                 rank_list.append(str(rank))
                 google_link_list.append(str(link))
@@ -149,62 +167,65 @@ def read_ads(input_keyword, open_browser=False):
                 google_ident_list.append("Google Textanzeige")
                 id_list.append(str(screen_id) + "_g")
 
-
-
-
-
-
-
     # =======================================
     # =======================================
     # ========== WITH YOUTUBE ===============
     # =======================================
     # =======================================
-    driver.get("https://www.youtube.com/results?search_query={}".format(input_keyword))
-    content = driver.page_source.encode('utf-8').strip()
-    soup = BeautifulSoup(content, 'lxml')
-
+    driver.get(
+        "https://www.youtube.com/results?search_query={}".format(input_keyword))
+    # content = driver.page_source.encode('utf-8').strip()
+    # soup = BeautifulSoup(content, 'lxml')
 
     # ==================================
     # =========== Youtube Textanzeige Ad
     # ==================================
-    if 0:
-        # contents = soup.findAll('div', id='contents')[1].find_all('div', id='contents').find_all('div', id='sparkles-container
-        # contents = soup.findAll( id='contents', limit=1) #working
-        contents = soup.find_all('div', id='sparkles-container')
-        print((contents))
-        # print('len(contents)')
-        # print(len(contents))
+    # https://stackoverflow.com/questions/69875125/find-element-by-commands-are-deprecated-in-selenium
+    if 1:
 
+        #contents = soup.find_all('div', id='sparkles-body')
+        print('---------------------------------------------------------------')
+        additional_ad_elements = driver.find_elements_by_id("contents")
+        for i in additional_ad_elements:
+            if i.get_attribute('class') == "style-scope ytd-section-list-renderer": # and i.get_attribute('id') == 'contents': 
+                    additional_ad_elements = i
+                    break
         rank = 0
-        for eachBlock in contents:
-            print(f'--{input_keyword}----------------------------------------------------------------------------')
-            block = eachBlock.find('div', id='contents')
-            title = (block.find('h3').get_text())
-            print(block.find('div', id='website-text').get_text())
-
-            # print(block.find('div', id='sparkles-container').find('h3').get_text())
-
+        for i in additional_ad_elements.find_elements_by_xpath("./*"):            
+        # for i in additional_ad_elements.find_elements_by_xpath("//div[@id='contents'][@class='style-scope ytd-item-section-renderer']"):            
+            try:
+                res_1 = i.find_element_by_id("display-url").text      
+                if (len(res_1)==0):
+                    res_1 = i.find_element_by_id("website-text").text                   
+            except : 
+                try:
+                    res_1 = i.find_element_by_id("website-text").text   
+                except: res_1 = ''
+            try:
+                res_2 = i.find_element_by_xpath('//h3[@id="title"]').text
+            except : res_2 = ''
+            
+            # no price available in this type of ads
             # try:
-            #     link1 = block.find('div', id='website-text').get_text()
-            # except:
-            #     link1 = ''
-            # try:
-            #     link2 = block.find('div', id='display-url').get_text()
-            # except:
-            #     link2 = ''
-
-            # link = link1 + link2 #
-
-            # try: title = block.find('h3', id='title').get_text()
-            # except: title = ''
-
-            # print( f"=============Youtube Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nAnbieter : {nlink}\nkeyword: {input_keyword}")
-
-
-
-
-
+            #     res_3 = i.find_elements_by_tag_name("img")[0].get_attribute("src")
+            # except : res_3 = ''
+            
+            try:
+                res_4 = i.find_elements_by_xpath('//yt-formatted-string[@role="link"]')
+                res_4 = ', '.join(filter(None, [_filter(i) for i in res_4]))                    
+            except : res_4 = ''
+            
+            # only add the results to the lists when all information was read properly
+            if (len(res_1) and len(res_2)): 
+                rank += 1
+                rank_list.append(rank)
+                google_link_list.append(res_1)
+                google_title_list.append(res_2)
+                google_price_list.append("")
+                google_seller_list.append(res_1)
+                google_ident_list.append("Youtube Textanzeige")
+                id_list.append(screen_id + "_yt")
+                print("Youtbe Text")
 
 
 
