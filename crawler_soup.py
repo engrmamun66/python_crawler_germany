@@ -173,8 +173,8 @@ def read_ads(input_keyword, open_browser=False):
         print('I am here.')
         # youtube_contents = youtube_soup.find_all('div', class_='contents')
 
-        youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-item-section-renderer sparkles-light-cta')
-        # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
+        # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-item-section-renderer sparkles-light-cta')
+        youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class_='style-scope ytd-section-list-renderer')
         # print(len(youtube_contents))
