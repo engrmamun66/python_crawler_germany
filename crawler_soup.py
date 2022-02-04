@@ -172,14 +172,22 @@ def read_ads(input_keyword, open_browser=False):
     # ==================================
     if 1:
         print('I am here.')
+        youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
+        for con1 in youtube_contents:
+            youtube_contents = con1.find_all('div', class_='style-scope ytd-item-section-renderer')
+            print(youtube_contents)
+
         # youtube_contents = youtube_soup.find_all('div', class_='contents')
 
         # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-item-section-renderer sparkles-light-cta')
-        youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
+        # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class_='style-scope ytd-section-list-renderer')
-        print(len(youtube_contents))
-        print(youtube_contents)
+
+        # for eachBlock1 in youtube_contents:
+
+        # print(len(youtube_contents))
+        # print(youtube_contents)
 
         # if youtube_contents != None:
         #     for i in youtube_contents:
