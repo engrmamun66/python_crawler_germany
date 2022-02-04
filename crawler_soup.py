@@ -174,7 +174,7 @@ def read_ads(input_keyword, open_browser=False):
         # youtube_contents = youtube_soup.find_all('div', class_='contents')
 
         # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-item-section-renderer sparkles-light-cta')
-        youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
+        # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class='style-scope ytd-section-list-renderer')
         # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class_='style-scope ytd-section-list-renderer')
         # print(len(youtube_contents))
@@ -184,21 +184,34 @@ def read_ads(input_keyword, open_browser=False):
         #         if i.get_attribute('class') == "style-scope ytd-section-list-renderer":
         #             youtube_contents = i
         #             break
-        print(len(youtube_contents))
-        rank = 0
-        for eachBlock in youtube_contents:
+        # print(len(youtube_contents))
+        # rank = 0
+        # for eachBlock in youtube_contents:
         # for i in youtube_contents.find_elements_by_xpath("./*"):
-            print('i am in loop')
+            # print('i am in loop')
             # try: link = eachBlock.find('span', role="text").get_text()
             # except: link = ''
 
             # try: title = eachBlock.find('div', class_='style-scope ytd-promoted-sparkles-web-renderer').find('h3').get_text()
             # try: title = eachBlock.find('h3', id='title').get_text()
             # try: title = i.find_element_by_xpath('//h3[@id="title"]').text
-            try: title = eachBlock.find_element_by_xpath('//h3[@id="title"]').text
-            except: title=''
+            # try: title = eachBlock.find_element_by_xpath('//h3[@id="title"]').text
+            # except: title=''
 
-            print("title: "+str(title))
+            # print("title: "+str(title))
+
+        additional_ad_elements = driver.find_elements_by_id("contents")
+        if additional_ad_elements != None: # check if additional ad elements were found
+            for i in additional_ad_elements:
+                if i.get_attribute('class') == "style-scope ytd-section-list-renderer":
+                    additional_ad_elements = i
+                    break
+            rank = 0
+            for i in additional_ad_elements.find_elements_by_xpath("./*"):
+                try:
+                    title = i.find_element_by_xpath('//h3[@id="title"]').text
+                except : title = ''
+                print("title: "+str(title))
 
     if 0:
         # contents = soup.findAll('div', id='contents')[1].find_all('div', id='contents').find_all('div', id='sparkles-container
