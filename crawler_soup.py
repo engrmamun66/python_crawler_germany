@@ -191,10 +191,11 @@ def read_ads(input_keyword, open_browser=False):
             # try: link = eachBlock.find('span', role="text").get_text()
             # except: link = ''
 
-            try: title = eachBlock.find('div', class_='style-scope ytd-promoted-sparkles-web-renderer').find('h3').get_text()
+            # try: title = eachBlock.find('div', class_='style-scope ytd-promoted-sparkles-web-renderer').find('h3').get_text()
+            try: title = eachBlock.find('h3', id='title').get_text()
             except: title=''
 
-            print(title)
+            print("title: "+str(title))
 
     if 0:
         # contents = soup.findAll('div', id='contents')[1].find_all('div', id='contents').find_all('div', id='sparkles-container
