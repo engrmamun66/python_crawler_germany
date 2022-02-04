@@ -176,8 +176,8 @@ def read_ads(input_keyword, open_browser=False):
         for con1 in youtube_contents:
             youtube_contents = con1.find_all('div', class_='style-scope ytd-item-section-renderer')
             for con2 in youtube_contents:
-                youtube_contents = con2.find_all('div', class_='style-scope ytd-item-section-renderer sparkles-light-cta')
-                print(youtube_contents)
+                youtube_contents3 = con2.find_all('div', class_='style-scope ytd-item-section-renderer sparkles-light-cta')
+                print(youtube_contents3)
 
         # youtube_contents = youtube_soup.find_all('div', class_='contents')
 
