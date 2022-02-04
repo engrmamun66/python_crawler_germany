@@ -171,7 +171,9 @@ def read_ads(input_keyword, open_browser=False):
     # ==================================
     if 1:
         print('I am here.')
-        contents = youtube_soup.find_all('ytd-item-section-renderer', class_='style-scope ytd-section-list-renderer')
+        contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
+        # contents = youtube_soup.find_all('ytd-item-section-renderer', class='style-scope ytd-section-list-renderer')
+        # contents = youtube_soup.find_all('ytd-item-section-renderer', class_='style-scope ytd-section-list-renderer')
         print(len(contents))
         # print(contents)
 
