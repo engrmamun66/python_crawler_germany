@@ -52,6 +52,7 @@ def read_ads(input_keyword, open_browser=False):
     if not open_browser:
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
+        options.add_argument('--log-level=1') # To stop warnings
         ser = Service("chromedriver_win32/chromedriver.exe")
         driver = webdriver.Chrome(service=ser, options=options)
     else:
