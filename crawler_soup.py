@@ -161,14 +161,15 @@ def read_ads(input_keyword, open_browser=False):
     # =======================================
     # =======================================
     driver.get("https://www.youtube.com/results?search_query={}".format(input_keyword))
-    content = driver.page_source.encode('utf-8').strip()
-    soup = BeautifulSoup(content, 'lxml')
+    youtube_content = driver.page_source.encode('utf-8').strip()
+    youtube_soup = BeautifulSoup(youtube_content, 'lxml')
+    print(youtube_soup)
 
 
     # ==================================
     # =========== Youtube Textanzeige Ad
     # ==================================
-    if 1:
+    if 0:
         print('I am here.')
         contents = soup.find_all('div', class_='style-scope ytd-section-list-renderer"')
         print((contents))
