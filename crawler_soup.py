@@ -186,7 +186,8 @@ def read_ads(input_keyword, open_browser=False):
         #             break
         print(len(youtube_contents))
         rank = 0
-        for eachBlock in contents:
+        for eachBlock in youtube_contents:
+            print('i am in loop')
             # try: link = eachBlock.find('span', role="text").get_text()
             # except: link = ''
 
