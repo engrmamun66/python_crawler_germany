@@ -162,11 +162,8 @@ def read_ads(input_keyword, open_browser=False):
     # =======================================
     driver.get("https://www.youtube.com/results?search_query={}".format(input_keyword))
     youtube_content = driver.page_source.encode('utf-8').strip()
-    # youtube_soup = BeautifulSoup(youtube_content, 'lxml')
+    youtube_soup = BeautifulSoup(youtube_content, 'lxml')
     # print(youtube_soup)
-
-    youtube_soup=BeautifulSoup(youtube_content,'html.parser')
-    res=youtube_soup.find_all('h3',{'id':'title'})
     
 
 
@@ -175,8 +172,15 @@ def read_ads(input_keyword, open_browser=False):
     # ==================================
     if 1:
         print('I am here.')
-        for l in res:
-            print(l)
+        Vid={}
+        div_s = youtube_soup.findAll('div')
+        Title = div_s[1].find('span',class_='watch-title').text.strip()
+        Vid['Title']=Title
+        print(Vid)
+
+
+
+
         # youtube_contents = youtube_soup.find_all('div', class_='contents')
 
         # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-item-section-renderer sparkles-light-cta')
