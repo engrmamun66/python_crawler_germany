@@ -174,9 +174,9 @@ def read_ads(input_keyword, open_browser=False):
         print('I am here.')
         Vid={}
         div_s = youtube_soup.findAll('div')
-        Title = div_s[1].find('span',class_='watch-title').text.strip()
+        Title = div_s[1].find('h3',class_='style-scope ytd-promoted-sparkles-web-renderer').text.strip()
         Vid['Title']=Title
-        print(Vid)
+        print(Title)
 
 
 
