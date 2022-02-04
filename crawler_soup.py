@@ -186,15 +186,16 @@ def read_ads(input_keyword, open_browser=False):
         #             break
         print(len(youtube_contents))
         rank = 0
-        # for eachBlock in youtube_contents:
-        for i in youtube_contents.find_elements_by_xpath("./*"):
+        for eachBlock in youtube_contents:
+        # for i in youtube_contents.find_elements_by_xpath("./*"):
             print('i am in loop')
             # try: link = eachBlock.find('span', role="text").get_text()
             # except: link = ''
 
             # try: title = eachBlock.find('div', class_='style-scope ytd-promoted-sparkles-web-renderer').find('h3').get_text()
             # try: title = eachBlock.find('h3', id='title').get_text()
-            try: title = i.find_element_by_xpath('//h3[@id="title"]').text
+            # try: title = i.find_element_by_xpath('//h3[@id="title"]').text
+            try: title = eachBlock.find_element_by_xpath('//h3[@id="title"]').text
             except: title=''
 
             print("title: "+str(title))
