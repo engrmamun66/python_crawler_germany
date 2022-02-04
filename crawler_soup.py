@@ -171,11 +171,20 @@ def read_ads(input_keyword, open_browser=False):
     # ==================================
     if 1:
         print('I am here.')
-        contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
-        # contents = youtube_soup.find_all('ytd-item-section-renderer', class='style-scope ytd-section-list-renderer')
-        # contents = youtube_soup.find_all('ytd-item-section-renderer', class_='style-scope ytd-section-list-renderer')
-        print(len(contents))
-        # print(contents)
+        youtube_contents = youtube_soup.find_all('div', class_='contents')
+
+        # youtube_contents = youtube_soup.find_all('div', class_='style-scope ytd-section-list-renderer')
+        # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class='style-scope ytd-section-list-renderer')
+        # youtube_contents = youtube_soup.find_all('ytd-item-section-renderer', class_='style-scope ytd-section-list-renderer')
+        # print(len(youtube_contents))
+
+        if youtube_contents != None:
+            for i in youtube_contents:
+                if i.get_attribute('class') == "style-scope ytd-section-list-renderer":
+                    youtube_contents = i
+                    break
+        print(len(youtube_contents))
+        rank = 0
 
     if 0:
         # contents = soup.findAll('div', id='contents')[1].find_all('div', id='contents').find_all('div', id='sparkles-container
