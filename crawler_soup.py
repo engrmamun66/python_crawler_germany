@@ -71,7 +71,7 @@ def read_ads(input_keyword, open_browser=False):
     # ==============================
     # =========== Google Shopping Ad
     # ==============================
-    if 0:
+    if 1:
         contents = soup.find_all('div', class_='mnr-c pla-unit')
         rank = 0
         for eachBlock in contents:
@@ -125,7 +125,7 @@ def read_ads(input_keyword, open_browser=False):
     # =================================
     # =========== Google Textanzeige Ad
     # =================================
-    if 0:
+    if 1:
         contents = soup.find_all('div', class_='uEierd')
         rank = 0
         for eachBlock in contents:
@@ -182,52 +182,7 @@ def read_ads(input_keyword, open_browser=False):
     # =========== Youtube Textanzeige Ad
     # ==================================
     # https://stackoverflow.com/questions/69875125/find-element-by-commands-are-deprecated-in-selenium
-    if 1:
-
-        #contents = soup.find_all('div', id='sparkles-body')
-        print('---------------------------------------------------------------')
-        additional_ad_elements = driver.find_elements_by_id("contents")
-        for i in additional_ad_elements:
-            if i.get_attribute('class') == "style-scope ytd-section-list-renderer": # and i.get_attribute('id') == 'contents': 
-                    additional_ad_elements = i
-                    break
-        rank = 0
-        for i in additional_ad_elements.find_elements_by_xpath("./*"):            
-        # for i in additional_ad_elements.find_elements_by_xpath("//div[@id='contents'][@class='style-scope ytd-item-section-renderer']"):            
-            try:
-                res_1 = i.find_element_by_id("display-url").text      
-                if (len(res_1)==0):
-                    res_1 = i.find_element_by_id("website-text").text                   
-            except : 
-                try:
-                    res_1 = i.find_element_by_id("website-text").text   
-                except: res_1 = ''
-            try:
-                res_2 = i.find_element_by_xpath('//h3[@id="title"]').text
-            except : res_2 = ''
-            
-            # no price available in this type of ads
-            # try:
-            #     res_3 = i.find_elements_by_tag_name("img")[0].get_attribute("src")
-            # except : res_3 = ''
-            
-            try:
-                res_4 = i.find_elements_by_xpath('//yt-formatted-string[@role="link"]')
-                res_4 = ', '.join(filter(None, [_filter(i) for i in res_4]))                    
-            except : res_4 = ''
-            
-            # only add the results to the lists when all information was read properly
-            if (len(res_1) and len(res_2)): 
-                rank += 1
-                rank_list.append(rank)
-                google_link_list.append(res_1)
-                google_title_list.append(res_2)
-                google_price_list.append("")
-                google_seller_list.append(res_1)
-                google_ident_list.append("Youtube Textanzeige")
-                id_list.append(screen_id + "_yt")
-                print("Youtbe Text")
-
+     
 
 
 

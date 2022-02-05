@@ -12,19 +12,15 @@ code_start_time = time.time()
 def get_inputed_keyword_file_name_by_cli():
     myFiles = glob.glob('*.txt')
     myFiles = [file for file in myFiles if(file != 'stopwords.txt')]
-    filetext = '     # Your Text File List:\n     --------------------------\n'
+    filetext = '\t# Your Text File List:\n\t--------------------------\n'
     for i in range(len(myFiles)):
-        filetext += "       " + str(i+1)+") " + myFiles[i] + "\n"
+       filetext += "\t  " + str(i+1)+") " + myFiles[i] + "\n"
 
-    filetext += '     --------------------------\n'
-    _index = int(input(f"{filetext}     # Type Index Of keyword File: "))
+    filetext += '\t--------------------------\n'
+    _index = int(input(f"{filetext}\t# Type Index Of keyword File: "))
     try:
         inputeFileName = myFiles[_index-1]
     except: inputeFileName = '' 
-    
-    if(len(inputeFileName)):
-        print(f'\n     ({inputeFileName}) Crawl is starting...  ')
-        time.sleep(2)
     return inputeFileName
 
 
@@ -109,13 +105,23 @@ try:
 except:
     pass
 
+
+showBrowser = str(input("\tOpen brower(y/n): "))
+if isinstance(showBrowser, str):
+    if(showBrowser=='y'): showBrowser = True
+    if(showBrowser=='n'): showBrowser = False
+else:
+    open_brower = False
+print('\n')
 fileName_fromCli = get_inputed_keyword_file_name_by_cli()
+print(f'\n\t({fileName_fromCli}) Crawl is starting...  ')
+time.sleep(2)
 
 keywords = open(fileName_fromCli,'r', encoding='utf8') 
 results = {}
-for keyword in keywords.readlines():        
+for keyword in keywords.readlines():
         try:
-            results[keyword] = crawler_soup.read_ads(keyword,False)
+            results[keyword] = crawler_soup.read_ads(keyword,showBrowser)
             '''if len(results[keyword][0]) > 0:         debug
                 break'''
         except Exception as e:
