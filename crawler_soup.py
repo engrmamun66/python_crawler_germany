@@ -7,12 +7,15 @@ from warnings import catch_warnings
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 from datetime import datetime
 import time
 import random
 import string
 import re
+import base64
 
 
 #google_link_list = [] , google_title_list = [] , google_price_list = [] , google_anbieter_list = [] , youtube_link_list = [] , youtube_title_list = [] , youtube_price_list = [] , youtube_seller_list = [] ,
@@ -71,7 +74,7 @@ def read_ads(input_keyword, open_browser=False):
     # ==============================
     # =========== Google Shopping Ad
     # ==============================
-    if 1:
+    if 0:
         contents = soup.find_all('div', class_='mnr-c pla-unit')
         rank = 0
         for eachBlock in contents:
@@ -125,7 +128,7 @@ def read_ads(input_keyword, open_browser=False):
     # =================================
     # =========== Google Textanzeige Ad
     # =================================
-    if 1:
+    if 0:
         contents = soup.find_all('div', class_='uEierd')
         rank = 0
         for eachBlock in contents:
@@ -173,16 +176,26 @@ def read_ads(input_keyword, open_browser=False):
     # ========== WITH YOUTUBE ===============
     # =======================================
     # =======================================
-    driver.get(
-        "https://www.youtube.com/results?search_query={}".format(input_keyword))
+    driver.get("https://www.youtube.com/results?search_query={}".format(input_keyword))
+    
+    try:
+        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,("//*[text()='I Agree']")))).click()
+    except:
+        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//*[@id='yDmH0d']"))).click()
+        # WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div/div/div[2]/div[1]/div[4]/form/div[1]/div/button'))).click()
     # content = driver.page_source.encode('utf-8').strip()
     # soup = BeautifulSoup(content, 'lxml')
 
     # ==================================
     # =========== Youtube Textanzeige Ad
-    # ==================================
-    # https://stackoverflow.com/questions/69875125/find-element-by-commands-are-deprecated-in-selenium
-     
+    # ==================================    
+    driver.maximize_window()
+    # driver.set_window_size(700, 1080)
+    time.sleep(2)
+    driver.save_screenshot("C:\Webcrawler\Screens\{}_yt.png".format(screen_id))
+
+
+
 
 
 

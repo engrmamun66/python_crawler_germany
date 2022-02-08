@@ -41,7 +41,7 @@ class GUI():
             for keyword in keywords.readlines():
                     
                     try:
-                        results[keyword] = crawler_soup.read_ads(keyword,False) #fff
+                        results[keyword] = crawler_soup.read_ads(keyword,True) #fff
                         '''if len(results[keyword][0]) > 0:         debug
                             break'''
                     except Exception as e:
@@ -67,7 +67,7 @@ class GUI():
             
 
     def crawl(self,keyword,driver):
-        return crawler_soup.read_ads(keyword, False)#fff
+        return crawler_soup.read_ads(keyword, True)#fff
 
     def safe(self,results):
         print('=============================')
