@@ -37,7 +37,7 @@ def imgtotext(imagename: string, image_index: int = 1, positionMap="0:0, 0:0", s
         
 
     if showimage:
-        cv2.imshow('Img', img)
+        # cv2.imshow('Img', img)
         cv2.imshow("cropped", cropped_image)
         cv2.waitKey(0)
 

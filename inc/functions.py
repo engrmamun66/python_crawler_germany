@@ -1,7 +1,7 @@
 from sqlite3 import TimeFromTicks
 
 
-def isAd(text):
+def isYtAd(text):
     return "Ad " in text or "VISIT SITE" in text
 
 
@@ -10,7 +10,6 @@ def exclude(line):
     return line
 
 def titleCleaner(title):
-    alphabets = 'zxcvbnm,./asdfghjkl;\\qwertyuiop[]1234567890-=!#%^&*()_+QWERTYUIOP{}ASDFGHJKL:"|ZXCVBNM<>?'
     title = title.replace("VISIT SITE", "")
     title = title.replace("[4", "")
     title = title.replace("[erty", "")
@@ -20,11 +19,11 @@ def titleCleaner(title):
     title = title.replace(" ", " ")
     title = title.replace("®", " ")
     title = title.split('...')[0]
-    title = title.lstrip(" -“@!~$%^&*(){}[]\"'|\\/?<,>.`+*©")
-    title = title.rstrip(" -“@!~$%^&*(){}[]\"'|\\/?<,>.`+*©")
+    title = title.lstrip(" ,-“@!~$%^&*(){}[]\"'|\\/?<,>.`+*©€,")
+    title = title.rstrip(" ,-“@!~$%^&*(){}[]\"'|\\/?<,>.`+*©€,")
     return title
 
-def getTitle(text):
+def getYtTitle(text):
     arr = text.split('\n')
     title = ''
     for line in arr:
@@ -35,7 +34,7 @@ def getTitle(text):
     theTitle = title.split('Visit')[0]
     return titleCleaner(theTitle)
 
-def getLink(text):
+def getYtLink(text):
     arr = text.split('\n')
     title = ''
     url = ''
@@ -61,7 +60,7 @@ def getPrice(text):
     return url.strip()
 
    
-def readAds(text):
+def readYtAds(text):
     ads = []
     singleAd = ''
     for line in text.split('\n'):
@@ -73,3 +72,43 @@ def readAds(text):
     c = len(ads)
     print(f"------------------------------\n\nTotle ad is : {c}")
     return ads;
+
+
+# ====================================================
+# ====================================================
+# ==============                    ==================
+# ============= Youtube Shopping Ad ==================
+# ==============                    ==================
+# ====================================================
+# ====================================================
+
+def isYsAd(text):
+    return "Suggested products" in text
+
+def lineArray(adText):
+    arr = []
+    for line in adText.split('\n'):
+        if(len(line)):
+            arr.append(line)
+    return arr
+
+
+
+def getYsTitle(text):
+    arr = lineArray(text)
+    del(arr[-1])
+    del(arr[-1])
+    
+    title = '' 
+    for line in arr:        
+        title += " " + line
+        
+    theTitle = title.split('...')[0]
+    return titleCleaner(theTitle)
+
+
+def getYsPrice(text):
+    return lineArray(text)[-1]
+
+def getYsAnbieter(text):
+    return lineArray(text)[-2]
