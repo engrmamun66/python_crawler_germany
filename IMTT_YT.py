@@ -7,7 +7,7 @@ from inc.functions import isYtAd, readYtAds, getYtTitle, getYtLink
 
 imgMap_1 = "190:1500, 0:1500"
 
-imageText = imgtotext(imagename='try-6.png', image_index=1,
+imageText = imgtotext(imagename='assets/try-6.png', image_index=1,
                       positionMap=imgMap_1, showimage=False, printText=False)
 
 if isYtAd(imageText):    

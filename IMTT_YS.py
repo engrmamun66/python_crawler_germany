@@ -5,7 +5,8 @@ from inc.functions import isYtAd, readYtAds, getYtTitle, getYtLink
 from inc.functions import isYsAd, getYsTitle, getYsPrice, getYsAnbieter
 
 
-hasShoppinAdd = isYsAd(imgtotext(imagename='try_1.png', image_index=1, positionMap="200:900, 0:1500"))
+hasShoppinAdd = isYsAd(imgtotext(
+    imagename='assets/try_1.png', image_index=1, positionMap="200:900, 0:1500"))
 
 if hasShoppinAdd:
     gridMaps = ["300:860, 0:335", #grid1
@@ -14,7 +15,7 @@ if hasShoppinAdd:
                 "300:860, 905:1200", #grid4
                 ]
     for gridMap in gridMaps:
-        imageText = imgtotext(imagename='try_3.png', image_index=1, positionMap=gridMap, showimage=False, printText=False)
+        imageText = imgtotext(imagename='assets/try_3.png', image_index=1, positionMap=gridMap, showimage=False, printText=False)
         title = getYsTitle(imageText)
         anbieter = getYsAnbieter(imageText)
         price = getYsPrice(imageText)
@@ -23,8 +24,7 @@ if hasShoppinAdd:
 
 
 
-   
-    
+
 
 
 
