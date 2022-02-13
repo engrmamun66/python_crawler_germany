@@ -85,16 +85,19 @@ def read_ads(input_keyword, open_browser=True):
     # =========== Google Shopping Ad
     # ==============================
     if 1:
+
+        # Controll Screen Shot
+        driver.set_window_size(700, 1080)
+        time.sleep(1)
+        imageFileName = "C:\Webcrawler\Screens\{}_gs.png".format(screen_id)
+        driver.save_screenshot(imageFileName)
+        keepScreenShot = True
+
+
         contents = soup.find_all('div', class_='mnr-c pla-unit')        
         rank = 0
         for eachBlock in contents:
-            # Controll Screen Shot
-            driver.set_window_size(700, 1080)
-            time.sleep(1)
-            imageFileName = "C:\Webcrawler\Screens\{}_gs.png".format(screen_id)
-            driver.save_screenshot(imageFileName)
-            keepScreenShot = True
-
+    
             try:
                 link = eachBlock.find('div', class_='ropLT').find('a')['href']
             except:
@@ -152,15 +155,18 @@ def read_ads(input_keyword, open_browser=True):
     # =========== Google Textanzeige Ad
     # =================================
     if 1:
+
+        # Controll Screen Shot
+        driver.set_window_size(700, 1080)
+        time.sleep(1)
+        imageFileName = "C:\Webcrawler\Screens\{}_gt.png".format(screen_id)
+        driver.save_screenshot(imageFileName)
+        keepScreenShot = True
+
+
         contents = soup.find_all('div', class_='uEierd')
         rank = 0
         for eachBlock in contents:
-            # Controll Screen Shot
-            driver.set_window_size(700, 1080)
-            time.sleep(1)
-            imageFileName = "C:\Webcrawler\Screens\{}_gt.png".format(screen_id)
-            driver.save_screenshot(imageFileName)
-            keepScreenShot = True
             try:
                 link = eachBlock.find('span', role="text").get_text()
             except:
@@ -247,18 +253,18 @@ def read_ads(input_keyword, open_browser=True):
                     title = getYtTitle(ad)
                     link = getYtLink(ad)
                     anbieter = link
-
-                    rank += 1
-                    rank_list.append(str(rank))
-                    google_link_list.append(str(link))
-                    google_title_list.append(str(title))
-                    google_price_list.append('')
-                    google_anbieter_list.append(str(anbieter))
-                    google_ident_list.append("Youtube Textanzeige")
-                    id_list.append(str(screen_id) + "_yt")
-
-                    print(
-                        f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
+                    
+                    if  len(title) and len(link):
+                        rank += 1
+                        rank_list.append(str(rank))
+                        google_link_list.append(str(link))
+                        google_title_list.append(str(title))
+                        google_price_list.append('')
+                        google_anbieter_list.append(str(anbieter))
+                        google_ident_list.append("Youtube Textanzeige")
+                        id_list.append(str(screen_id) + "_yt")
+                        print(
+                            f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
         else:
             print(f'This is not an add !!!')
             pass

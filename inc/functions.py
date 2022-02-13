@@ -1,4 +1,6 @@
 from sqlite3 import TimeFromTicks
+from termios import ECHOE
+from tkinter import E
 
 
 def isYtAd(text):
@@ -24,27 +26,32 @@ def titleCleaner(title):
     return title
 
 def getYtTitle(text):
-    arr = text.split('\n')
-    title = ''
-    for line in arr:
-        line = exclude(line)
-        line = line.lstrip('@ ')
-        if('Ad' in line): break
-        title += " " + line
-    theTitle = title.split('Visit')[0]
-    return titleCleaner(theTitle)
+    try:
+        arr = text.split('\n')
+        title = ''`
+        for line in arr:
+            line = exclude(line)
+            line = line.lstrip('@ ')
+            if('Ad' in line):
+                break
+            title += " " + line
+        theTitle = title.split('Visit')[0]
+        return titleCleaner(theTitle)
+    except: return ''
 
 def getYtLink(text):
-    arr = text.split('\n')
-    title = ''
-    url = ''
-    for line in arr:
-        if('http' in line): 
-            for word in line.split(" "):               
-                if 'http' in word:
-                    url = word
-                    break
-    return url.strip()
+    try:
+        arr = text.split('\n')
+        title = ''
+        url = ''
+        for line in arr:
+            if('http' in line):
+                for word in line.split(" "):
+                    if 'http' in word:
+                        url = word
+                        break
+        return url.strip()
+    except: return ''
 
 
 def getPrice(text):
