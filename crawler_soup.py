@@ -227,7 +227,7 @@ def read_ads(input_keyword, open_browser=True):
         WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
             (By.XPATH, "//*[@id='yDmH0d']"))).click()
 
-    if 1:
+    if 0:
         # ==================================
         # =========== Youtube Textanzeige Ad
         # ==================================

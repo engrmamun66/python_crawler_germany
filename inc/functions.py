@@ -1,8 +1,3 @@
-from sqlite3 import TimeFromTicks
-from termios import ECHOE
-from tkinter import E
-
-
 def isYtAd(text):
     return "Ad " in text or "VISIT SITE" in text
 
@@ -28,7 +23,7 @@ def titleCleaner(title):
 def getYtTitle(text):
     try:
         arr = text.split('\n')
-        title = ''`
+        title = ''
         for line in arr:
             line = exclude(line)
             line = line.lstrip('@ ')
