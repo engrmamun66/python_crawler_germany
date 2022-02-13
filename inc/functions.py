@@ -74,8 +74,8 @@ def readYtAds(text):
             ads.append(singleAd)
             singleAd = ''
  
-    c = len(ads)
-    print(f"------------------------------\n\nTotle ad is : {c}")
+    # c = len(ads)
+    # print(f"------------------------------\n\nTotle ad is : {c}")
     return ads;
 
 
