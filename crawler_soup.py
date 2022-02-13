@@ -74,7 +74,7 @@ def read_ads(input_keyword, open_browser=True):
     # ==============================
     # =========== Google Shopping Ad
     # ==============================
-    if 0:
+    if 1:
         contents = soup.find_all('div', class_='mnr-c pla-unit')        
         rank = 0
         for eachBlock in contents:
@@ -139,7 +139,7 @@ def read_ads(input_keyword, open_browser=True):
     # =================================
     # =========== Google Textanzeige Ad
     # =================================
-    if 0:
+    if 1:
         contents = soup.find_all('div', class_='uEierd')
         rank = 0
         for eachBlock in contents:
@@ -214,6 +214,13 @@ def read_ads(input_keyword, open_browser=True):
     driver.set_window_size(700, 1080)
     time.sleep(2)
     driver.save_screenshot("C:\Webcrawler\Screens\{}_yt.png".format(screen_id))
+
+
+
+
+
+
+
 
     # close web driver
     driver.close()
