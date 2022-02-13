@@ -229,6 +229,7 @@ def read_ads(input_keyword, open_browser=True):
             WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
             (By.XPATH, "//*[@id='yDmH0d']"))).click()
         except: pass
+    driver.switch_to.default_content()
             
     if 1:
         # ==================================
