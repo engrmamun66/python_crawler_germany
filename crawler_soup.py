@@ -70,7 +70,7 @@ def read_ads(input_keyword, open_browser=True):
     # =======================================
     # =======================================
 
-    if 0:
+    if 1:
         driver.get("https://www.google.de/search?q={}".format(input_keyword.replace(" ", "+")))
         content = driver.page_source.encode('utf-8').strip()
         soup = BeautifulSoup(content, 'lxml')
