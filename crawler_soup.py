@@ -225,9 +225,11 @@ def read_ads(input_keyword, open_browser=True):
         WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
             (By.XPATH, ("//*[text()='I Agree']")))).click()
     except:
-        WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
+        try:
+            WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
             (By.XPATH, "//*[@id='yDmH0d']"))).click()
-
+        except: pass
+            
     if 1:
         # ==================================
         # =========== Youtube Textanzeige Ad
@@ -242,36 +244,36 @@ def read_ads(input_keyword, open_browser=True):
 
         imgMap_1 = "190:1500, 0:1500"
         imageText = imgtotext(imagename=imageFileName, image_index=1,
-                            positionMap=imgMap_1, showimage=False, printText=False)
+                            positionMap=imgMap_1, showimage=True, printText=True)
 
-        if isYtAd(imageText):
-            ads = readYtAds(imageText)            
-            if len(ads):
-                keepScreenShot = False
-                rank = 0
-                for ad in ads:
+        # if isYtAd(imageText):
+        #     ads = readYtAds(imageText)            
+        #     if len(ads):
+        #         keepScreenShot = False
+        #         rank = 0
+        #         for ad in ads:
 
-                    title = getYtTitle(ad)
-                    link = getYtLink(ad)
-                    anbieter = link
+        #             title = getYtTitle(ad)
+        #             link = getYtLink(ad)
+        #             anbieter = link
                     
-                    if  len(title) and len(link):
-                        rank += 1
-                        rank_list.append(str(rank))
-                        google_link_list.append(str(link))
-                        google_title_list.append(str(title))
-                        google_price_list.append('')
-                        google_anbieter_list.append(str(anbieter))
-                        google_ident_list.append("Youtube Textanzeige")
-                        id_list.append(str(screen_id) + "_yt")
-                        print(
-                            f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
-        else:
-            print(f'This is not an add !!!')
-            pass
+        #             if  len(title) and len(link):
+        #                 rank += 1
+        #                 rank_list.append(str(rank))
+        #                 google_link_list.append(str(link))
+        #                 google_title_list.append(str(title))
+        #                 google_price_list.append('')
+        #                 google_anbieter_list.append(str(anbieter))
+        #                 google_ident_list.append("Youtube Textanzeige")
+        #                 id_list.append(str(screen_id) + "_yt")
+        #                 print(
+        #                     f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
+        # else:
+        #     print(f'This is not an add !!!')
+        #     pass
 
-        if  not keepScreenShot:  # found not fount any add delete the image
-            os.remove(imageFileName)
+        # if  not keepScreenShot:  # found not fount any add delete the image
+        #     os.remove(imageFileName)
         
         # del(keepScreenShot)
 
