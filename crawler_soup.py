@@ -11,6 +11,7 @@ import random
 import string
 import re
 import base64
+import os
 
 
 # For Yourtube Text
@@ -51,7 +52,7 @@ def read_ads(input_keyword, open_browser=True):
             for x in myTitle.split():
                 if('€' in x):
                     result = x
-        return result
+        return result.rstrip(" ,-“@!~$%^&*(){}[]\"'|\\/?<,>.`+*©zxcvbnm,.asdfghjklqwertyuiopZXCVBNM<ASDFGHJKL:QWERTYUIOP")
 
     # open_browser = 1
     if not open_browser:
@@ -72,6 +73,13 @@ def read_ads(input_keyword, open_browser=True):
     driver.get("https://www.google.de/search?q={}".format(input_keyword))
     content = driver.page_source.encode('utf-8').strip()
     soup = BeautifulSoup(content, 'lxml')
+
+
+    try:
+        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,("//*[text()='Ich stimme zu']")))).click()
+    except:
+        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//*[@id='zV9nZe']"))).click()
+    driver.switch_to.default_content()
 
     # ==============================
     # =========== Google Shopping Ad
@@ -246,7 +254,7 @@ def read_ads(input_keyword, open_browser=True):
                     id_list.append(str(screen_id) + "_yt")
 
                     print(
-                        f'=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\n')
+                        f'=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}")
         else:
             print(f'This is not an add !!!')
             pass
