@@ -1,3 +1,4 @@
+from numpy import delete
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -19,7 +20,7 @@ from inc.functions import isYtAd, readYtAds, getYtTitle, getYtLink
 
 #google_link_list = [] , google_title_list = [] , google_price_list = [] , google_anbieter_list = [] , youtube_link_list = [] , youtube_title_list = [] , youtube_price_list = [] , youtube_seller_list = [] ,
 
-def read_ads(input_keyword, open_browser=False):
+def read_ads(input_keyword, open_browser=True):
     screen_id = random.randint(1, 9999999999)
     screen_id = random.choice(string.ascii_letters) + random.choice(
         string.ascii_letters) + str(screen_id) + random.choice(string.ascii_letters)
@@ -54,7 +55,7 @@ def read_ads(input_keyword, open_browser=False):
     if not open_browser:
         options = webdriver.ChromeOptions()
         options.add_argument('headless')
-        options.add_argument('--log-level=1') # To stop warnings
+        options.add_argument('--log-level=1')  # To stop warnings
         ser = Service("chromedriver_win32/chromedriver.exe")
         driver = webdriver.Chrome(service=ser, options=options)
     else:
@@ -73,10 +74,17 @@ def read_ads(input_keyword, open_browser=False):
     # ==============================
     # =========== Google Shopping Ad
     # ==============================
-    if 1:
-        contents = soup.find_all('div', class_='mnr-c pla-unit')
+    if 0:
+        contents = soup.find_all('div', class_='mnr-c pla-unit')        
         rank = 0
         for eachBlock in contents:
+            # Controll Screen Shot
+            driver.set_window_size(700, 1080)
+            time.sleep(.5)
+            imageFileName = "C:\Webcrawler\Screens\{}_gs.png".format(screen_id)
+            driver.save_screenshot(imageFileName)
+            deleteScreenShot = True
+
             try:
                 link = eachBlock.find('div', class_='ropLT').find('a')['href']
             except:
@@ -114,6 +122,7 @@ def read_ads(input_keyword, open_browser=False):
             ):
                 print(
                     f"=============Google Shopping Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nident_von : {ident_von}\keyword: {input_keyword}")
+                deleteScreenShot = False
                 rank += 1
                 rank_list.append(str(rank))
                 google_link_list.append(str(link))
@@ -123,14 +132,23 @@ def read_ads(input_keyword, open_browser=False):
                 brand_list.append(str(ident_von))
                 google_ident_list.append("Google Shopping Ad")
                 id_list.append(str(screen_id) + "_g")
+        
+            if deleteScreenShot:  # found not fount any add delete the image
+                os.remove(imageFileName)
 
     # =================================
     # =========== Google Textanzeige Ad
     # =================================
-    if 1:
+    if 0:
         contents = soup.find_all('div', class_='uEierd')
         rank = 0
         for eachBlock in contents:
+            # Controll Screen Shot
+            driver.set_window_size(700, 1080)
+            time.sleep(.5)
+            imageFileName = "C:\Webcrawler\Screens\{}_gt.png".format(screen_id)
+            driver.save_screenshot(imageFileName)
+            deleteScreenShot = True
             try:
                 link = eachBlock.find('span', role="text").get_text()
             except:
@@ -161,6 +179,7 @@ def read_ads(input_keyword, open_browser=False):
             ):
                 print(
                     f"=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
+                deleteScreenShot = False
                 rank += 1
                 rank_list.append(str(rank))
                 google_link_list.append(str(link))
@@ -170,32 +189,31 @@ def read_ads(input_keyword, open_browser=False):
                 google_ident_list.append("Google Textanzeige")
                 id_list.append(str(screen_id) + "_g")
 
+            if deleteScreenShot:  # found not fount any add delete the image
+                os.remove(imageFileName)
+
     # =======================================
     # =======================================
     # ========== WITH YOUTUBE ===============
     # =======================================
     # =======================================
-    driver.get("https://www.youtube.com/results?search_query={}".format(input_keyword))
-    
-    
+    driver.get(
+        "https://www.youtube.com/results?search_query={}".format(input_keyword))
+
     try:
-        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,("//*[text()='I Agree']")))).click()
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+            (By.XPATH, ("//*[text()='I Agree']")))).click()
     except:
-        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//*[@id='yDmH0d']"))).click()
-       
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+            (By.XPATH, "//*[@id='yDmH0d']"))).click()
 
     # ==================================
     # =========== Youtube Textanzeige Ad
-    # ==================================    
-    driver.maximize_window()
+    # ==================================
+    # driver.maximize_window()
     driver.set_window_size(700, 1080)
     time.sleep(2)
     driver.save_screenshot("C:\Webcrawler\Screens\{}_yt.png".format(screen_id))
-
-
-
-
-
 
     # close web driver
     driver.close()

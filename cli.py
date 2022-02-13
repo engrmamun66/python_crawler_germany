@@ -106,13 +106,14 @@ except:
     pass
 
 
-showBrowser = str(input("\tOpen brower(y/n): "))
-if isinstance(showBrowser, str):
-    if(showBrowser=='y'): showBrowser = True
-    if(showBrowser=='n'): showBrowser = False
-else:
-    open_brower = False
-print('\n')
+# showBrowser = str(input("\tOpen brower(y/n): "))
+# if isinstance(showBrowser, str):
+#     if(showBrowser=='y'): showBrowser = True
+#     if(showBrowser=='n'): showBrowser = False
+# else:
+#     open_brower = False
+open_brower = True
+
 fileName_fromCli = get_inputed_keyword_file_name_by_cli()
 print(f'\n\t({fileName_fromCli}) Crawl is starting...  ')
 time.sleep(2)
