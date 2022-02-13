@@ -232,7 +232,7 @@ def read_ads(input_keyword, open_browser=True):
         # driver.maximize_window()
 
         time.sleep(1)
-        imageFileName = "C:\\Webcrawler\\Screens\\{}_yt.png".format(screen_id)
+        imageFileName = "C:\\Webcrawler\\Screens\\{}_y.png".format(screen_id)
         driver.save_screenshot(imageFileName)
         keepScreenShot = True
 
@@ -242,8 +242,7 @@ def read_ads(input_keyword, open_browser=True):
 
         if isYtAd(imageText):
             ads = readYtAds(imageText)
-            if len(ads):
-                keepScreenShot = False
+            if len(ads):                
                 rank = 0
                 for ad in ads:
 
@@ -255,6 +254,7 @@ def read_ads(input_keyword, open_browser=True):
                         print(
                             f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
                         rank += 1
+                        keepScreenShot = False
                         rank_list.append(str(rank))
                         google_link_list.append(str(link))
                         google_title_list.append(str(title))
