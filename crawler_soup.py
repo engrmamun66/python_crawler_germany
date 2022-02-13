@@ -201,7 +201,7 @@ def read_ads(input_keyword, open_browser=True):
             try:
                 os.remove(imageFileName)
             except:
-                pass
+                print("\nFailed Delete To Image!")
                 
 
     # =======================================
