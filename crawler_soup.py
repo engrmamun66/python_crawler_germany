@@ -143,7 +143,7 @@ def read_ads(input_keyword, open_browser=True):
                 google_anbieter_list.append(str(anbieter))
                 brand_list.append(str(ident_von))
                 google_ident_list.append("Google Shopping Ad")
-                id_list.append(str(screen_id) + "_g")
+                id_list.append(str(screen_id) + "_gs")
         
             if  not keepScreenShot:  # found not fount any add delete the image
                 os.remove(imageFileName)
@@ -204,7 +204,7 @@ def read_ads(input_keyword, open_browser=True):
                 google_price_list.append(str(price))
                 google_anbieter_list.append(str(anbieter))
                 google_ident_list.append("Google Textanzeige")
-                id_list.append(str(screen_id) + "_g")
+                id_list.append(str(screen_id) + "_gt")
 
             if  not keepScreenShot:  # found not fount any add delete the image
                 os.remove(imageFileName)
@@ -220,7 +220,7 @@ def read_ads(input_keyword, open_browser=True):
 
         driver.get("https://www.youtube.com/results?search_query={}".format(input_keyword))
 
-        driver.set_window_size(1000, 1080)
+        # driver.set_window_size(1000, 1080)
 
         try:
             WebDriverWait(driver, 1.5).until(EC.element_to_be_clickable(
@@ -275,7 +275,8 @@ def read_ads(input_keyword, open_browser=True):
                 pass
 
             if  not keepScreenShot:  # found not fount any add delete the image
-                os.remove(imageFileName)
+                # os.remove(imageFileName)
+                pass
             
             # del(keepScreenShot)
     except:pass
