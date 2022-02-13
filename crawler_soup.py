@@ -76,9 +76,9 @@ def read_ads(input_keyword, open_browser=True):
 
 
     try:
-        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,("//*[text()='Ich stimme zu']")))).click()
+        WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH,("//*[text()='Ich stimme zu']")))).click()
     except:
-        WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.XPATH,"//*[@id='zV9nZe']"))).click()
+        WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH,"//*[@id='zV9nZe']"))).click()
     driver.switch_to.default_content()
 
     # ==============================
@@ -131,7 +131,7 @@ def read_ads(input_keyword, open_browser=True):
                 and len(ident_von)
             ):
                 print(
-                    f"=============Google Shopping Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nident_von : {ident_von}\keyword: {input_keyword}")
+                    f"\n=============Google Shopping Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nident_von : {ident_von}\keyword: {input_keyword}")
                 keepScreenShot = False
                 rank += 1
                 rank_list.append(str(rank))
@@ -145,6 +145,8 @@ def read_ads(input_keyword, open_browser=True):
         
             if  not keepScreenShot:  # found not fount any add delete the image
                 os.remove(imageFileName)
+            
+            del(keepScreenShot)
 
     # =================================
     # =========== Google Textanzeige Ad
@@ -188,7 +190,7 @@ def read_ads(input_keyword, open_browser=True):
                 and anbieter[0:4] == 'http'
             ):
                 print(
-                    f"=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
+                    f"\n=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
                 keepScreenShot = False
                 rank += 1
                 rank_list.append(str(rank))
@@ -201,6 +203,8 @@ def read_ads(input_keyword, open_browser=True):
 
             if  not keepScreenShot:  # found not fount any add delete the image
                 os.remove(imageFileName)
+            
+            del(keepScreenShot)
 
     # =======================================
     # =======================================
@@ -211,13 +215,13 @@ def read_ads(input_keyword, open_browser=True):
         "https://www.youtube.com/results?search_query={}".format(input_keyword))
 
     try:
-        WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+        WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
             (By.XPATH, ("//*[text()='I Agree']")))).click()
     except:
-        WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+        WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
             (By.XPATH, "//*[@id='yDmH0d']"))).click()
 
-    if 0:
+    if 1:
         # ==================================
         # =========== Youtube Textanzeige Ad
         # ==================================
@@ -254,13 +258,15 @@ def read_ads(input_keyword, open_browser=True):
                     id_list.append(str(screen_id) + "_yt")
 
                     print(
-                        f'=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}")
+                        f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
         else:
             print(f'This is not an add !!!')
             pass
 
         if  not keepScreenShot:  # found not fount any add delete the image
             os.remove(imageFileName)
+        
+        del(keepScreenShot)
 
 
 
