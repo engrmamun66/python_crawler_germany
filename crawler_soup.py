@@ -14,7 +14,6 @@ import os
 
 
 # For Yourtube Text
-from typing import Iterator
 from inc.withimage import imgtotext
 from inc.functions import isYtAd, readYtAds, getYtTitle, getYtLink
 
@@ -70,8 +69,8 @@ def read_ads(input_keyword, open_browser=True):
     # =======================================
     # =======================================
 
-    if 1:
-        driver.get("https://www.google.de/search?q={}".format(input_keyword))
+    if 0:
+        driver.get("https://www.google.de/search?q={}".format(input_keyword.replace(" ", "+")))
         content = driver.page_source.encode('utf-8').strip()
         soup = BeautifulSoup(content, 'lxml')
         try:
@@ -210,10 +209,11 @@ def read_ads(input_keyword, open_browser=True):
     # =======================================
     # =======================================
     
-    if 0:
+    if 1:
         # options = webdriver.ChromeOptions()
         # driver = webdriver.Chrome('chromedriver_win32/chromedriver.exe')
-        driver.get( "https://www.youtube.com/results?search_query={}".format(input_keyword.replace(" ", "+")))       
+        driver.get( "https://www.youtube.com/results?search_query={}".format(input_keyword.replace(" ", "+"))) 
+        
 
         try:
             WebDriverWait(driver, 1.5).until(EC.element_to_be_clickable(

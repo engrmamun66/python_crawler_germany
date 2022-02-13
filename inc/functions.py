@@ -1,5 +1,8 @@
 def isYtAd(text):
-    return "Ad " in text or "VISIT SITE" in text
+    if(isinstance(text, str)):
+        return "Ad " in text or "VISIT SITE" in text
+    else:
+        return False
 
 
 def exclude(line):
