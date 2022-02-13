@@ -1,4 +1,3 @@
-from numpy import delete
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -84,10 +83,10 @@ def read_ads(input_keyword, open_browser=True):
     # ==============================
     # =========== Google Shopping Ad
     # ==============================
-    if 1:
+    if 0:
 
         # Controll Screen Shot
-        driver.set_window_size(1000, 1080)
+        # driver.set_window_size(1000, 1080)
         time.sleep(1)
         imageFileName = "C:\Webcrawler\Screens\{}_gs.png".format(screen_id)
         driver.save_screenshot(imageFileName)
@@ -149,15 +148,15 @@ def read_ads(input_keyword, open_browser=True):
             if  not keepScreenShot:  # found not fount any add delete the image
                 os.remove(imageFileName)
             
-            del(keepScreenShot)
+            # del(keepScreenShot)
 
     # =================================
     # =========== Google Textanzeige Ad
     # =================================
-    if 1:
+    if 0:
 
         # Controll Screen Shot
-        driver.set_window_size(1000, 1080)
+        # driver.set_window_size(1000, 1080)
         time.sleep(1)
         imageFileName = "C:\Webcrawler\Screens\{}_gt.png".format(screen_id)
         driver.save_screenshot(imageFileName)
@@ -210,7 +209,7 @@ def read_ads(input_keyword, open_browser=True):
             if  not keepScreenShot:  # found not fount any add delete the image
                 os.remove(imageFileName)
             
-            del(keepScreenShot)
+            # del(keepScreenShot)
 
     # =======================================
     # =======================================
@@ -220,6 +219,8 @@ def read_ads(input_keyword, open_browser=True):
     driver.get(
         "https://www.youtube.com/results?search_query={}".format(input_keyword))
 
+    driver.set_window_size(1000, 1080)
+
     try:
         WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
             (By.XPATH, ("//*[text()='I Agree']")))).click()
@@ -227,13 +228,13 @@ def read_ads(input_keyword, open_browser=True):
         WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
             (By.XPATH, "//*[@id='yDmH0d']"))).click()
 
-    if 0:
+    if 1:
         # ==================================
         # =========== Youtube Textanzeige Ad
         # ==================================
         # driver.maximize_window()
 
-        driver.set_window_size(1000, 1080)
+        
         time.sleep(1)
         imageFileName = "C:\Webcrawler\Screens\{}_yt.png".format(screen_id)
         driver.save_screenshot(imageFileName)
@@ -272,7 +273,7 @@ def read_ads(input_keyword, open_browser=True):
         if  not keepScreenShot:  # found not fount any add delete the image
             os.remove(imageFileName)
         
-        del(keepScreenShot)
+        # del(keepScreenShot)
 
 
 
