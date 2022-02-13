@@ -13,9 +13,11 @@ import re
 import base64
 
 
+# For Yourtube Text
 from typing import Iterator
 from inc.withimage import imgtotext
 from inc.functions import isYtAd, readYtAds, getYtTitle, getYtLink
+
 
 
 #google_link_list = [] , google_title_list = [] , google_price_list = [] , google_anbieter_list = [] , youtube_link_list = [] , youtube_title_list = [] , youtube_price_list = [] , youtube_seller_list = [] ,
@@ -80,10 +82,10 @@ def read_ads(input_keyword, open_browser=True):
         for eachBlock in contents:
             # Controll Screen Shot
             driver.set_window_size(700, 1080)
-            time.sleep(.5)
+            time.sleep(1)
             imageFileName = "C:\Webcrawler\Screens\{}_gs.png".format(screen_id)
             driver.save_screenshot(imageFileName)
-            deleteScreenShot = True
+            keepScreenShot = True
 
             try:
                 link = eachBlock.find('div', class_='ropLT').find('a')['href']
@@ -122,7 +124,7 @@ def read_ads(input_keyword, open_browser=True):
             ):
                 print(
                     f"=============Google Shopping Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nident_von : {ident_von}\keyword: {input_keyword}")
-                deleteScreenShot = False
+                keepScreenShot = False
                 rank += 1
                 rank_list.append(str(rank))
                 google_link_list.append(str(link))
@@ -133,7 +135,7 @@ def read_ads(input_keyword, open_browser=True):
                 google_ident_list.append("Google Shopping Ad")
                 id_list.append(str(screen_id) + "_g")
         
-            if deleteScreenShot:  # found not fount any add delete the image
+            if  not keepScreenShot:  # found not fount any add delete the image
                 os.remove(imageFileName)
 
     # =================================
@@ -145,10 +147,10 @@ def read_ads(input_keyword, open_browser=True):
         for eachBlock in contents:
             # Controll Screen Shot
             driver.set_window_size(700, 1080)
-            time.sleep(.5)
+            time.sleep(1)
             imageFileName = "C:\Webcrawler\Screens\{}_gt.png".format(screen_id)
             driver.save_screenshot(imageFileName)
-            deleteScreenShot = True
+            keepScreenShot = True
             try:
                 link = eachBlock.find('span', role="text").get_text()
             except:
@@ -179,7 +181,7 @@ def read_ads(input_keyword, open_browser=True):
             ):
                 print(
                     f"=============Google Textanzeige Ad===============\nlink : {link}\nTitle : {title}\nPrice : {price}\nAnbieter : {anbieter}\nkeyword: {input_keyword}")
-                deleteScreenShot = False
+                keepScreenShot = False
                 rank += 1
                 rank_list.append(str(rank))
                 google_link_list.append(str(link))
@@ -189,7 +191,7 @@ def read_ads(input_keyword, open_browser=True):
                 google_ident_list.append("Google Textanzeige")
                 id_list.append(str(screen_id) + "_g")
 
-            if deleteScreenShot:  # found not fount any add delete the image
+            if  not keepScreenShot:  # found not fount any add delete the image
                 os.remove(imageFileName)
 
     # =======================================
@@ -207,13 +209,50 @@ def read_ads(input_keyword, open_browser=True):
         WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
             (By.XPATH, "//*[@id='yDmH0d']"))).click()
 
-    # ==================================
-    # =========== Youtube Textanzeige Ad
-    # ==================================
-    # driver.maximize_window()
-    driver.set_window_size(700, 1080)
-    time.sleep(2)
-    driver.save_screenshot("C:\Webcrawler\Screens\{}_yt.png".format(screen_id))
+    if 0:
+        # ==================================
+        # =========== Youtube Textanzeige Ad
+        # ==================================
+        # driver.maximize_window()
+
+        driver.set_window_size(700, 1080)
+        time.sleep(1)
+        imageFileName = "C:\Webcrawler\Screens\{}_yt.png".format(screen_id)
+        driver.save_screenshot(imageFileName)
+        keepScreenShot = True
+
+        imgMap_1 = "190:1500, 0:1500"
+        imageText = imgtotext(imagename=imageFileName, image_index=1,
+                            positionMap=imgMap_1, showimage=False, printText=False)
+
+        if isYtAd(imageText):
+            ads = readYtAds(imageText)            
+            if len(ads):
+                keepScreenShot = False
+                rank = 0
+                for ad in ads:
+
+                    title = getYtTitle(ad)
+                    link = getYtLink(ad)
+                    anbieter = link
+
+                    rank += 1
+                    rank_list.append(str(rank))
+                    google_link_list.append(str(link))
+                    google_title_list.append(str(title))
+                    google_price_list.append('')
+                    google_anbieter_list.append(str(anbieter))
+                    google_ident_list.append("Youtube Textanzeige")
+                    id_list.append(str(screen_id) + "_yt")
+
+                    print(
+                        f'=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\n')
+        else:
+            print(f'This is not an add !!!')
+            pass
+
+        if  not keepScreenShot:  # found not fount any add delete the image
+            os.remove(imageFileName)
 
 
 
