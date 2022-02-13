@@ -70,8 +70,20 @@ def read_ads(input_keyword, open_browser=True):
     # =======================================
     # =======================================
 
-    if 1:
-        driver.get("https://www.google.de/search?q={}".format(input_keyword.replace(" ", "+")))
+    if 0:
+
+        trys_google = 10
+        while True:
+            if trys_google <= 0:
+                break
+            trys_google -= 1
+            driver.get(
+                "https://www.google.de/search?q={}".format(input_keyword.replace(" ", "+")))
+            time.sleep(1)
+            trys_google -= 1
+
+
+        
         content = driver.page_source.encode('utf-8').strip()
         soup = BeautifulSoup(content, 'lxml')
         try:
@@ -85,7 +97,7 @@ def read_ads(input_keyword, open_browser=True):
         # ==============================        
 
         # Controll Screen Shot
-        driver.set_window_size(1000, 1080)
+        driver.set_window_size(700, 1080)
         time.sleep(1)
         imageFileName = "C:\\Webcrawler\\Screens\\{}_g.png".format(screen_id)
         driver.save_screenshot(imageFileName)
@@ -111,7 +123,7 @@ def read_ads(input_keyword, open_browser=True):
                 price = eachBlock.find(
                     'span', text=re.compile(".*€.*")).get_text()
             except:
-                price = '0.00€'
+                price = '0.00 €'
 
             try:
                 anbieter = eachBlock.find(
@@ -213,8 +225,15 @@ def read_ads(input_keyword, open_browser=True):
     if 1:
         # options = webdriver.ChromeOptions()
         # driver = webdriver.Chrome('chromedriver_win32/chromedriver.exe')
-        driver.get( "https://www.youtube.com/results?search_query={}".format(input_keyword.replace(" ", "+"))) 
+        trys_youtube = 10
+        while True:
+            if trys_youtube <= 0: break
+            trys_youtube -= 1
+            driver.get( "https://www.youtube.com/results?search_query={}".format(input_keyword.replace(" ", "+"))) 
+            time.sleep(1)
+            trys_youtube -= 1
         
+        driver.set_window_size(700, 1080)        
 
         try:
             WebDriverWait(driver, 1.5).until(EC.element_to_be_clickable(
@@ -255,7 +274,7 @@ def read_ads(input_keyword, open_browser=True):
 
                 if len(link) and len(title) and len(anbieter) and len(price):
                     print(
-                        f'\n=============Youtube Shopping Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
+                        f'\n=============Youtube Shopping Ad===============\nLink: {link}\nTitle: {title}\nAnbieter: {anbieter}\nkeyword: {input_keyword}')
                     rank += 1
                     keepScreenShot = False
                     rank_list.append(str(rank))
