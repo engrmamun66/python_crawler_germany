@@ -246,7 +246,7 @@ def read_ads(input_keyword, open_browser=True):
 
             imgMap_1 = "190:1500, 0:1500"
             imageText = imgtotext(imagename=imageFileName, image_index=1,
-                                positionMap=imgMap_1, showimage=False, printText=True)
+                                positionMap=imgMap_1, showimage=False, printText=False)
 
             if isYtAd(imageText):
                 ads = readYtAds(imageText)            
@@ -260,6 +260,7 @@ def read_ads(input_keyword, open_browser=True):
                         anbieter = link
                         
                         if  len(title) and len(link):
+                            print(f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
                             rank += 1
                             rank_list.append(str(rank))
                             google_link_list.append(str(link))
@@ -268,8 +269,7 @@ def read_ads(input_keyword, open_browser=True):
                             google_anbieter_list.append(str(anbieter))
                             google_ident_list.append("Youtube Textanzeige")
                             id_list.append(str(screen_id) + "_yt")
-                            print(
-                                f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
+                            
             else:
                 print(f'This is not an add !!!')
                 pass
