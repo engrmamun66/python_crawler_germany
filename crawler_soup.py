@@ -87,7 +87,7 @@ def read_ads(input_keyword, open_browser=True):
     if 1:
 
         # Controll Screen Shot
-        driver.set_window_size(700, 1080)
+        driver.set_window_size(1000, 1080)
         time.sleep(1)
         imageFileName = "C:\Webcrawler\Screens\{}_gs.png".format(screen_id)
         driver.save_screenshot(imageFileName)
@@ -157,7 +157,7 @@ def read_ads(input_keyword, open_browser=True):
     if 1:
 
         # Controll Screen Shot
-        driver.set_window_size(700, 1080)
+        driver.set_window_size(1000, 1080)
         time.sleep(1)
         imageFileName = "C:\Webcrawler\Screens\{}_gt.png".format(screen_id)
         driver.save_screenshot(imageFileName)
@@ -233,7 +233,7 @@ def read_ads(input_keyword, open_browser=True):
         # ==================================
         # driver.maximize_window()
 
-        driver.set_window_size(700, 1080)
+        driver.set_window_size(1000, 1080)
         time.sleep(1)
         imageFileName = "C:\Webcrawler\Screens\{}_yt.png".format(screen_id)
         driver.save_screenshot(imageFileName)
