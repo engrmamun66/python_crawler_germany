@@ -16,6 +16,7 @@ import os
 # For Yourtube Text
 from inc.withimage import imgtotext
 from inc.functions import isYtAd, readYtAds, getYtTitle, getYtLink
+from inc.functions import isYsAd, getYsTitle, getYsPrice, getYsAnbieter
 
 
 
@@ -225,20 +226,57 @@ def read_ads(input_keyword, open_browser=True):
             except: pass
             
         # driver.switch_to.default_content()
-
-        # ==================================
-        # =========== Youtube Textanzeige Ad
-        # ==================================
-        # driver.maximize_window()
-
         time.sleep(1)
         imageFileName = "C:\\Webcrawler\\Screens\\{}_y.png".format(screen_id)
         driver.save_screenshot(imageFileName)
         keepScreenShot = True
 
+        # ===============================
+        # ===============================
+        # =========== Youtube Shopping Ad
+        # ===============================  
+        # =============================== 
+
+        hasShoppinAdd = isYsAd(imgtotext(imagename=imageFileName, image_index=1, positionMap="200:900, 0:1500"))
+        if hasShoppinAdd:
+            gridMaps = ["300:860, 0:335", #grid1
+                        "300:860, 335:620", #grid2
+                        "300:860, 620:905", #grid3
+                        "300:860, 905:1200", #grid4
+                        ]
+            rank = 0
+            for gridMap in gridMaps:
+                imageText = imgtotext(imagename=imageFileName, image_index=1, positionMap=gridMap, showimage=False, printText=False)
+
+                link = "https://www.youtube.com/results?search_query={}".format(input_keyword.replace(" ", "+"))
+                title = getYsTitle(imageText)
+                anbieter = getYsAnbieter(imageText)
+                price = getYsPrice(imageText)
+
+                if len(link) and len(title) and len(anbieter) and len(price):
+                    print(
+                        f'\n=============Youtube Shopping Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
+                    rank += 1
+                    keepScreenShot = False
+                    rank_list.append(str(rank))
+                    google_link_list.append(str(link))
+                    google_title_list.append(str(title))
+                    google_price_list.append(price)
+                    google_anbieter_list.append(str(anbieter))
+                    google_ident_list.append("Youtube Shopping")
+                    id_list.append(str(screen_id) + "_ys")
+              
+
+      
+         
+        # ==================================
+        # ==================================
+        # =========== Youtube Textanzeige Ad
+        # ==================================   
+        # ==================================   
+
         imgMap_1 = "190:1500, 0:1500"
-        imageText = imgtotext(imagename=imageFileName, image_index=1,
-                            positionMap=imgMap_1, showimage=False, printText=False)
+        imageText = imgtotext(imagename=imageFileName, image_index=1, positionMap=imgMap_1, showimage=False, printText=False)
 
         if isYtAd(imageText):
             ads = readYtAds(imageText)

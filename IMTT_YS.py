@@ -23,24 +23,3 @@ if hasShoppinAdd:
         print(f"Title: {title}, \nAnbieter: {anbieter}\nprice: {price}\n")
 
 
-
-
-
-
-
-
-
-
-
-
-# if isYtAd(imageText):    
-#     ads = readYtAds(imageText)
-#     if len(ads):
-#         for ad in ads:
-#             title = getYtTitle(ad)
-#             link = getYtLink(ad)
-#             print(f'\nTitle: {title}\nLink: {link}\n')
-# else: 
-#     print(f'This is not an add !!!')
-#     pass
-
