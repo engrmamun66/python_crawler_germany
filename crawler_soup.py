@@ -83,7 +83,7 @@ def read_ads(input_keyword, open_browser=True):
     # ==============================
     # =========== Google Shopping Ad
     # ==============================
-    if 0:
+    if 1:
 
         # Controll Screen Shot
         # driver.set_window_size(1000, 1080)
@@ -153,7 +153,7 @@ def read_ads(input_keyword, open_browser=True):
     # =================================
     # =========== Google Textanzeige Ad
     # =================================
-    if 0:
+    if 1:
 
         # Controll Screen Shot
         # driver.set_window_size(1000, 1080)
@@ -216,67 +216,69 @@ def read_ads(input_keyword, open_browser=True):
     # ========== WITH YOUTUBE ===============
     # =======================================
     # =======================================
-    driver.get(
-        "https://www.youtube.com/results?search_query={}".format(input_keyword))
-
-    driver.set_window_size(1000, 1080)
-
     try:
-        WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
-            (By.XPATH, ("//*[text()='I Agree']")))).click()
-    except:
+
+        driver.get("https://www.youtube.com/results?search_query={}".format(input_keyword))
+
+        driver.set_window_size(1000, 1080)
+
         try:
-            WebDriverWait(driver, 3).until(EC.element_to_be_clickable(
-            (By.XPATH, "//*[@id='yDmH0d']"))).click()
-        except: pass
-    driver.switch_to.default_content()
+            WebDriverWait(driver, 1.5).until(EC.element_to_be_clickable(
+                (By.XPATH, ("//*[text()='I Agree']")))).click()
+        except:
+            try:
+                WebDriverWait(driver, 1.5).until(EC.element_to_be_clickable(
+                (By.XPATH, "//*[@id='yDmH0d']"))).click()
+            except: pass
+        driver.switch_to.default_content()
+                
+        if 1:
+            # ==================================
+            # =========== Youtube Textanzeige Ad
+            # ==================================
+            # driver.maximize_window()
+
             
-    if 1:
-        # ==================================
-        # =========== Youtube Textanzeige Ad
-        # ==================================
-        # driver.maximize_window()
+            time.sleep(1)
+            imageFileName = "C:\Webcrawler\Screens\{}_yt.png".format(screen_id)
+            driver.save_screenshot(imageFileName)
+            keepScreenShot = True
 
-        
-        time.sleep(1)
-        imageFileName = "C:\Webcrawler\Screens\{}_yt.png".format(screen_id)
-        driver.save_screenshot(imageFileName)
-        keepScreenShot = True
+            imgMap_1 = "190:1500, 0:1500"
+            imageText = imgtotext(imagename=imageFileName, image_index=1,
+                                positionMap=imgMap_1, showimage=False, printText=True)
 
-        imgMap_1 = "190:1500, 0:1500"
-        imageText = imgtotext(imagename=imageFileName, image_index=1,
-                            positionMap=imgMap_1, showimage=True, printText=True)
+            if isYtAd(imageText):
+                ads = readYtAds(imageText)            
+                if len(ads):
+                    keepScreenShot = False
+                    rank = 0
+                    for ad in ads:
 
-        # if isYtAd(imageText):
-        #     ads = readYtAds(imageText)            
-        #     if len(ads):
-        #         keepScreenShot = False
-        #         rank = 0
-        #         for ad in ads:
+                        title = getYtTitle(ad)
+                        link = getYtLink(ad)
+                        anbieter = link
+                        
+                        if  len(title) and len(link):
+                            rank += 1
+                            rank_list.append(str(rank))
+                            google_link_list.append(str(link))
+                            google_title_list.append(str(title))
+                            google_price_list.append('')
+                            google_anbieter_list.append(str(anbieter))
+                            google_ident_list.append("Youtube Textanzeige")
+                            id_list.append(str(screen_id) + "_yt")
+                            print(
+                                f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
+            else:
+                print(f'This is not an add !!!')
+                pass
 
-        #             title = getYtTitle(ad)
-        #             link = getYtLink(ad)
-        #             anbieter = link
-                    
-        #             if  len(title) and len(link):
-        #                 rank += 1
-        #                 rank_list.append(str(rank))
-        #                 google_link_list.append(str(link))
-        #                 google_title_list.append(str(title))
-        #                 google_price_list.append('')
-        #                 google_anbieter_list.append(str(anbieter))
-        #                 google_ident_list.append("Youtube Textanzeige")
-        #                 id_list.append(str(screen_id) + "_yt")
-        #                 print(
-        #                     f'\n=============Youtube Textanzeige Ad===============\nTitle: {title}\nLink: {link}\nkeyword: {input_keyword}')
-        # else:
-        #     print(f'This is not an add !!!')
-        #     pass
-
-        # if  not keepScreenShot:  # found not fount any add delete the image
-        #     os.remove(imageFileName)
-        
-        # del(keepScreenShot)
+            if  not keepScreenShot:  # found not fount any add delete the image
+                os.remove(imageFileName)
+            
+            # del(keepScreenShot)
+    except:pass
 
 
 
