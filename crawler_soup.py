@@ -265,6 +265,7 @@ def read_ads(input_keyword, open_browser=True):
                     google_anbieter_list.append(str(anbieter))
                     google_ident_list.append("Youtube Shopping")
                     id_list.append(str(screen_id) + "_ys")
+                    
 
         # ==================================
         # ==================================
